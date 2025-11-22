@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resonant Converter for Fluorescent Lamp Drive - Diana's Portfolio</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        /* Project detail page specific styles */
+        .project-detail {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: #000;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .project-detail h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .project-date {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .project-content h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .project-content p {
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .project-content ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .project-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .project-content figure {
+            margin: 2rem 0;
+        }
+
+        .project-content figure img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            display: block;
+            border: 1px solid #e0e0e0;
+        }
+
+        .project-content figcaption {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .equation {
+            display: block;
+            overflow-x: auto;
+            padding: 1rem 0;
+            text-align: center;
+            font-family: 'Times New Roman', serif;
+            font-size: 1rem;
+        }
+
+        .inline-math {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
+
+        .project-content a {
+            color: #000;
+            text-decoration: underline;
+        }
+
+        .project-content a:hover {
+            color: #666;
+        }
+
+        .reflection-note {
+            border-left: 2px solid #000;
+            padding-left: 1rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #555;
+        }
+
+        @media (max-width: 768px) {
+            .project-detail {
+                padding: 1.5rem 1rem 3rem;
+            }
+
+            .project-detail h1 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+    <!-- MathJax for equation rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <div class="project-detail">
+        <a href="../index.html" class="back-link">← Back to Projects</a>
+
+        <h1>Resonant Converter for Fluorescent Lamp Drive</h1>
+        <p class="project-date">Power Electronics</p>
+
+        <div class="project-content">
+            <h2>Background and Design Approach</h2>
+
+            <p>Fluorescent lamps require above 300 V to strike by ionizing mercury gas, which then emits UV light to cause phosphor to fluoresce. If the striking voltage is below the threshold, the lamp cannot properly light up. Therefore, a high strike voltage is critical to both safe and successful operations. When the lamp strikes, the negative resistance of the lamp requires a lower voltage to drive sufficient currents into the lamp.</p>
+
+            <p>The design requirements for the resonant converter are as follows:</p>
+
+            <ul>
+                <li><strong>Input:</strong> 30 V (specification given by lab setup)</li>
+                <li><strong>Output:</strong>
+                    <ul>
+                        <li>400 V when lamp is in the off state (<span class="inline-math">R<sub>lamp</sub> = ∞</span>)</li>
+                        <li>50 V when the lamp is in the on-state (<span class="inline-math">R<sub>lamp</sub> ≈ 52 Ω</span>)</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <p>The main design decision lies within the sizing of the L, C components to achieve the appropriate gain at resonant frequency when the circuit is unloaded and loaded. The key considerations for L, C selection can be summarized as:</p>
+
+            <ul>
+                <li>Gain at resonant frequency for state-dependent resistance of the fluorescent lamp</li>
+                <li>Inductor core saturation (which leads to reduced inductance as calculated from turn ratio)</li>
+                <li>Core losses</li>
+                <li>Inductor and capacitor ESR (which dampens the gain)</li>
+            </ul>
+
+            <h2>Design Decisions</h2>
+
+            <figure>
+                <img src="../images/lamp_topology.png" alt="Resonant Converter Topology">
+                <figcaption>Figure 1. Resonant Converter Topology</figcaption>
+            </figure>
+
+            <p>The lab inventory only has a few capacitors rated at high voltage (400V). Therefore, I anchored my calculations based on these available parts and measured their ESRs with an LCR meter for transfer function computation.</p>
+
+            <p>To compute the gain of the resonant converter, I used fundamental harmonic analysis (FHA) to approximate the Fourier series of the input square wave as a fundamental harmonic. The square wave switches between 0 V and 30 V and therefore has both a DC offset of 15 V and a periodic waveform, which can be simplified into its fundamental harmonic using a Fourier decomposition:</p>
+
+            <p class="equation">\[\frac{2}{\pi} \cdot 30 \cdot \sin(\omega t)\]</p>
+
+            <p>This analysis is valid given that the LC-network's resonance is tuned to be very close to the switching frequency.</p>
+
+            <p>The net gain of the system is therefore given by:</p>
+
+            <p class="equation">\[\frac{V_{out}}{V_{in}}\bigg|_{\text{lamp off}} = \frac{2}{\pi} \cdot \frac{j\omega R_c C + 1}{1 - \omega^2 LC + j\omega C(R_c + R_L)}\]</p>
+
+            <p class="equation">\[\frac{V_{out}}{V_{in}}\bigg|_{\text{lamp on}} = \frac{2}{\pi} \cdot \frac{1}{1 + \left(\frac{1}{R} + \frac{j\omega C}{j\omega R_c C + 1}\right)(j\omega L + R_L)}\]</p>
+
+            <p>An optimization sweep was conducted on a range of inductor values with an estimated ESR of 1Ω to achieve an output of ~400 V and ~50 V when the lamp is in the off- and on-state, respectively.</p>
+
+            <p>To achieve the selected inductance, core losses and inductance variation due to core saturation must be considered. Both ferrite and powered iron cores are available in lab inventory, and a comparison of their estimated losses using the computed magnetic field from the output current indicates that powered iron has about ten-fold more losses. As such, a ferrite core is used for this design, and the inductance is sized slightly higher than the value derived from the transfer function to mitigate the downsizing due to core saturation.</p>
+
+            <h2>Build Results</h2>
+
+            <p>A totem pole switches the 30 V DC supply, and the lamp was illuminated successfully! The output waveform is measured using a voltage divider across the output (<span class="inline-math">V<sub>scope</sub> = 0.03 · V<sub>lamp</sub></span>).</p>
+
+            <p>The output waveforms shown below before, during, and after strike events demonstrate the different states of the mercury gas:</p>
+
+            <figure>
+                <img src="../images/lamp_wave1.jpg" alt="Output waveform as the lamp is being struck">
+                <figcaption>Figure 2. Lamp waveform before, during, and after strike event</figcaption>
+            </figure>
+
+            <figure>
+                <img src="../images/lamp_wave2.jpg" alt="Output waveform during lamp's strike event">
+                <figcaption>Figure 3. Zoomed-in view of lamp waveform during strike event</figcaption>
+            </figure>
+
+            <figure>
+                <img src="../images/lamp_wave3.jpg" alt="Output waveform after the lamp has been struck">
+                <figcaption>Figure 4. Zoomed-in view of lamp waveform after strike event in steady state</figcaption>
+            </figure>
+
+            <p>The striking and steady-state waveform has an amplitude of around 10 V and 2.8 V, respectively, indicating a 333 V strike and 100 V steady-state voltage.</p>
+
+            <h2>Reflections</h2>
+
+            <p>This topology is a canonical, simple resonant converter that requires analysis primarily in the frequency domain, similar to a buck converter. The time-invariance of the circuit and approximations I was able to use simplifies the analysis compared to other switched-mode converters.</p>
+
+            <p>Despite its simplicity, it is a fundamental model of inverters that demonstrates relevance in a wide range of applications that demand an AC power source, such as induction heating, plasma generation, and wireless power transfer.</p>
+
+            <p class="reflection-note">In fact, I am exploring a topology based on this model in my research. We are optimizing a class E inverter for high frequency applications—<a href="#">read more about it here</a>.</p>
+        </div>
+    </div>
+</body>
+</html>

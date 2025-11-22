@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: #000;
+            background: #fff;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 3rem;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: flex-end;
+            margin-bottom: 2rem;
+        }
+
+        .intro {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        nav a {
+            color: #000;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .filter-section {
+            margin-bottom: 3rem;
+        }
+
+        .filter-label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 0.8rem;
+        }
+
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .filter-tag {
+            font-size: 0.85rem;
+            color: #666;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .filter-tag:hover {
+            color: #000;
+            text-decoration: underline;
+        }
+
+        .filter-tag.active {
+            color: #000;
+            text-decoration: underline;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+        }
+
+        .project-item {
+            text-decoration: none;
+            color: #000;
+            display: block;
+        }
+
+        .project-item.hidden {
+            display: none;
+        }
+
+        .project-image {
+            width: 100%;
+            aspect-ratio: 16/10;
+            background: #f5f5f5;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            color: #bbb;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-item:hover .project-image {
+            background: #ebebeb;
+        }
+
+        .project-title {
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 0.2rem;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            margin-bottom: 0.3rem;
+        }
+
+        .project-date {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .project-tag {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        footer {
+            margin-top: 6rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        footer a {
+            color: #000;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <a href="index.html">projects</a>
+                <a href="creative.html">creative</a>
+                <a href="about.html">about</a>
+            </nav>
+            <div class="intro">
+                hello there! I'm a junior studying Electrical Engineering & Computer Science at MIT, with an interest in power electronics and electromagnetics.
+                I use this space both to document my builds from personal and course projects and to synthesize
+                and reflect on my learnings across courses and projects.
+                I hope you enjoy!
+            </div>
+        </header>
+
+        <div class="filter-section">
+            <div class="filter-label">filter by:</div>
+            <div class="filter-tags" id="filterTags">
+                <!-- Filters will be generated here -->
+            </div>
+        </div>
+
+        <main>
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Projects will be generated here -->
+            </div>
+        </main>
+
+        <footer>
+            <a href="https://www.linkedin.com/in/diana-wang-490812326/">linkedin</a>
+            <!-- <a href="https://github.com/d1anaw">github</a> -->
+            <a href="jiamei@mit.edu">email</a>
+        </footer>
+    </div>
+
+    <!-- Load project data -->
+    <script src="projects-data.js"></script>
+
+    <script>
+        // Generate filter tags
+        const filterTagsContainer = document.getElementById('filterTags');
+        filterCategories.forEach((category, index) => {
+            const button = document.createElement('button');
+            button.className = 'filter-tag' + (index === 0 ? ' active' : '');
+            button.dataset.filter = category.id;
+            button.textContent = category.label;
+            filterTagsContainer.appendChild(button);
+        });
+
+        // Generate projects
+        const projectsGrid = document.getElementById('projectsGrid');
+        projects.forEach(project => {
+            const projectItem = document.createElement('a');
+            projectItem.href = project.link;
+            projectItem.className = 'project-item';
+            projectItem.dataset.tags = project.tags.join(',');
+
+            const projectImage = document.createElement('div');
+            projectImage.className = 'project-image';
+
+            if (project.image && project.image !== 'images/placeholder.jpg') {
+                const img = document.createElement('img');
+                img.src = project.image;
+                img.alt = project.title;
+                projectImage.appendChild(img);
+            } else {
+                projectImage.textContent = 'image';
+            }
+
+            const projectTitle = document.createElement('div');
+            projectTitle.className = 'project-title';
+            projectTitle.textContent = project.title;
+
+            const projectMeta = document.createElement('div');
+            projectMeta.className = 'project-meta';
+
+            const projectDate = document.createElement('div');
+            projectDate.className = 'project-date';
+            projectDate.textContent = project.date;
+
+            const projectTags = document.createElement('div');
+            projectTags.className = 'project-tags';
+            project.tags.forEach(tag => {
+                const tagSpan = document.createElement('span');
+                tagSpan.className = 'project-tag';
+                tagSpan.textContent = tag;
+                projectTags.appendChild(tagSpan);
+            });
+
+            projectMeta.appendChild(projectDate);
+            projectMeta.appendChild(projectTags);
+
+            projectItem.appendChild(projectImage);
+            projectItem.appendChild(projectTitle);
+            projectItem.appendChild(projectMeta);
+
+            projectsGrid.appendChild(projectItem);
+        });
+
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-tag');
+        const projectItems = document.querySelectorAll('.project-item');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const filter = button.dataset.filter;
+
+                // Update active state
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                // Filter projects
+                projectItems.forEach(item => {
+                    if (filter === 'all') {
+                        item.classList.remove('hidden');
+                    } else {
+                        const tags = item.dataset.tags.split(',');
+                        if (tags.includes(filter)) {
+                            item.classList.remove('hidden');
+                        } else {
+                            item.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
