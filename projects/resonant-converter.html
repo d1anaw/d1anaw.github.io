@@ -6,16 +6,177 @@
     <title>Resonant Converter for Fluorescent Lamp Drive - Diana's Portfolio</title>
     <link rel="stylesheet" href="../styles.css">
     <style>
+        /* Override body font */
+        body {
+            font-family: 'Calibri', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 16px;
+        }
+
+        /* Navigation matching homepage */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-bottom: 1px solid #000;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #000;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Add padding to body to account for fixed header */
+        body {
+            padding-top: 80px;
+        }
+
+        /* Outline sidebar - small cube */
+        .outline-sidebar {
+            position: fixed;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+
+        .outline-toggle {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #000;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 3px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .outline-toggle:hover {
+            background: #f5f5f5;
+        }
+
+        .outline-toggle span {
+            width: 16px;
+            height: 2px;
+            background: #000;
+            display: block;
+        }
+
+        /* Invisible bridge to connect cube to content */
+        .outline-toggle::after {
+            content: '';
+            position: absolute;
+            left: 40px;
+            top: 0;
+            width: 15px;
+            height: 100%;
+            background: transparent;
+        }
+
+        .outline-content {
+            position: absolute;
+            left: 50px;
+            top: 0;
+            background: #fff;
+            border: 1px solid #000;
+            padding: 1.25rem;
+            min-width: 220px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.15s ease;
+            z-index: 1;
+        }
+
+        .outline-sidebar:hover .outline-content,
+        .outline-content:hover {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Keep content visible when hovering over the bridge */
+        .outline-toggle:hover::after {
+            pointer-events: auto;
+        }
+
+        .outline-toggle:hover ~ .outline-content {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .outline-content h3 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .outline-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .outline-content li {
+            margin-bottom: 0.4rem;
+        }
+
+        .outline-content a {
+            color: #000;
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: block;
+            padding: 0.2rem 0;
+        }
+
+        .outline-content a:hover {
+            text-decoration: underline;
+        }
+
         /* Project detail page specific styles */
         .project-detail {
             max-width: 800px;
             margin: 0 auto;
-            padding: 2rem 1.5rem 4rem;
+            padding: 1.5rem 1.5rem 3rem;
         }
 
         .back-link {
             display: inline-block;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             color: #000;
             text-decoration: none;
             font-size: 0.9rem;
@@ -28,42 +189,42 @@
         .project-detail h1 {
             font-size: 1.8rem;
             font-weight: 600;
-            margin-bottom: 0.5rem;
-            line-height: 1.3;
+            margin-bottom: 0.25rem;
+            line-height: 1.2;
         }
 
         .project-date {
             font-size: 0.9rem;
             color: #666;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .project-content h2 {
             font-size: 1.1rem;
             font-weight: 600;
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-            font-style: italic;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+            font-style: normal;
         }
 
         .project-content p {
-            line-height: 1.7;
-            margin-bottom: 1rem;
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
             color: #333;
         }
 
         .project-content ul {
-            margin: 1rem 0;
+            margin: 0.75rem 0;
             padding-left: 1.5rem;
         }
 
         .project-content li {
-            margin-bottom: 0.5rem;
-            line-height: 1.6;
+            margin-bottom: 0.4rem;
+            line-height: 1.5;
         }
 
         .project-content figure {
-            margin: 2rem 0;
+            margin: 1.5rem 0;
         }
 
         .project-content figure img {
@@ -84,15 +245,13 @@
         .equation {
             display: block;
             overflow-x: auto;
-            padding: 1rem 0;
+            padding: 0.75rem 0;
             text-align: center;
-            font-family: 'Times New Roman', serif;
             font-size: 1rem;
         }
 
         .inline-math {
-            font-family: 'Times New Roman', serif;
-            font-style: italic;
+            font-style: normal;
         }
 
         .project-content a {
@@ -107,14 +266,22 @@
         .reflection-note {
             border-left: 2px solid #000;
             padding-left: 1rem;
-            margin: 2rem 0;
+            margin: 1.5rem 0;
             font-style: italic;
             color: #555;
         }
 
         @media (max-width: 768px) {
+            nav {
+                padding: 1.5rem 1rem;
+            }
+
+            .outline-sidebar {
+                left: 1rem;
+            }
+
             .project-detail {
-                padding: 1.5rem 1rem 3rem;
+                padding: 1.5rem 1rem 2.5rem;
             }
 
             .project-detail h1 {
@@ -123,10 +290,66 @@
         }
     </style>
     <!-- MathJax for equation rendering -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            },
+            chtml: {
+                scale: 1.1,
+                mtextInheritFont: true
+            }
+        };
+    </script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <style>
+        /* Better MathJax rendering */
+        mjx-container {
+            font-family: 'Latin Modern Math', 'STIX Two Math', 'Times New Roman', serif !important;
+        }
+
+        mjx-math {
+            font-size: 1.05em !important;
+        }
+    </style>
 </head>
 <body>
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <a href="../index.html" class="logo">Diana Wang</a>
+            <div class="nav-links">
+                <a href="../index.html">Projects</a>
+                <a href="../creative.html">Creative</a>
+                <a href="../about.html">About</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Outline Sidebar -->
+    <div class="outline-sidebar">
+        <div class="outline-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="outline-content">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#background">Background and Design Approach</a></li>
+                <li><a href="#design">Design Decisions</a></li>
+                <li><a href="#results">Build Results</a></li>
+                <li><a href="#reflections">Reflections</a></li>
+            </ul>
+        </div>
+    </div>
+
     <div class="project-detail">
         <a href="../index.html" class="back-link">← Back to Projects</a>
 
@@ -134,7 +357,7 @@
         <p class="project-date">Power Electronics</p>
 
         <div class="project-content">
-            <h2>Background and Design Approach</h2>
+            <h2 id="background">Background and Design Approach</h2>
 
             <p>Fluorescent lamps require above 300 V to strike by ionizing mercury gas, which then emits UV light to cause phosphor to fluoresce. If the striking voltage is below the threshold, the lamp cannot properly light up. Therefore, a high strike voltage is critical to both safe and successful operations. When the lamp strikes, the negative resistance of the lamp requires a lower voltage to drive sufficient currents into the lamp.</p>
 
@@ -159,7 +382,7 @@
                 <li>Inductor and capacitor ESR (which dampens the gain)</li>
             </ul>
 
-            <h2>Design Decisions</h2>
+            <h2 id="design">Design Decisions</h2>
 
             <figure>
                 <img src="../images/lamp_topology.png" alt="Resonant Converter Topology">
@@ -184,7 +407,7 @@
 
             <p>To achieve the selected inductance, core losses and inductance variation due to core saturation must be considered. Both ferrite and powered iron cores are available in lab inventory, and a comparison of their estimated losses using the computed magnetic field from the output current indicates that powered iron has about ten-fold more losses. As such, a ferrite core is used for this design, and the inductance is sized slightly higher than the value derived from the transfer function to mitigate the downsizing due to core saturation.</p>
 
-            <h2>Build Results</h2>
+            <h2 id="results">Build Results</h2>
 
             <p>A totem pole switches the 30 V DC supply, and the lamp was illuminated successfully! The output waveform is measured using a voltage divider across the output (<span class="inline-math">V<sub>scope</sub> = 0.03 · V<sub>lamp</sub></span>).</p>
 
@@ -207,13 +430,13 @@
 
             <p>The striking and steady-state waveform has an amplitude of around 10 V and 2.8 V, respectively, indicating a 333 V strike and 100 V steady-state voltage.</p>
 
-            <h2>Reflections</h2>
+            <h2 id="reflections">Reflections</h2>
 
             <p>This topology is a canonical, simple resonant converter that requires analysis primarily in the frequency domain, similar to a buck converter. The time-invariance of the circuit and approximations I was able to use simplifies the analysis compared to other switched-mode converters.</p>
 
             <p>Despite its simplicity, it is a fundamental model of inverters that demonstrates relevance in a wide range of applications that demand an AC power source, such as induction heating, plasma generation, and wireless power transfer.</p>
 
-            <p class="reflection-note">In fact, I am exploring a topology based on this model in my research. We are optimizing a class E inverter for high frequency applications—<a href="#">read more about it here</a>.</p>
+            <p class="reflection-note">In fact, I am exploring a topology related to this model in my research, which has currently undisclosed details, but we are optimizing a class E inverter for high frequency applications.</a>.</p>
         </div>
     </div>
 </body>

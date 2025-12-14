@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leslie Speaker Guitar Pedal - Diana's Portfolio</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        /* Override body font */
+        body {
+            font-family: 'Calibri', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 16px;
+        }
+
+        /* Navigation matching homepage */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-bottom: 1px solid #000;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #000;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Add padding to body to account for fixed header */
+        body {
+            padding-top: 80px;
+        }
+
+        /* Outline sidebar - small cube */
+        .outline-sidebar {
+            position: fixed;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+
+        .outline-toggle {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #000;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 3px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .outline-toggle:hover {
+            background: #f5f5f5;
+        }
+
+        .outline-toggle span {
+            width: 16px;
+            height: 2px;
+            background: #000;
+            display: block;
+        }
+
+        /* Invisible bridge to connect cube to content */
+        .outline-toggle::after {
+            content: '';
+            position: absolute;
+            left: 40px;
+            top: 0;
+            width: 15px;
+            height: 100%;
+            background: transparent;
+        }
+
+        .outline-content {
+            position: absolute;
+            left: 50px;
+            top: 0;
+            background: #fff;
+            border: 1px solid #000;
+            padding: 1.25rem;
+            min-width: 220px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.15s ease;
+            z-index: 1;
+        }
+
+        .outline-sidebar:hover .outline-content,
+        .outline-content:hover {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Keep content visible when hovering over the bridge */
+        .outline-toggle:hover::after {
+            pointer-events: auto;
+        }
+
+        .outline-toggle:hover ~ .outline-content {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .outline-content h3 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .outline-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .outline-content li {
+            margin-bottom: 0.4rem;
+        }
+
+        .outline-content a {
+            color: #000;
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: block;
+            padding: 0.2rem 0;
+        }
+
+        .outline-content a:hover {
+            text-decoration: underline;
+        }
+
+        /* Project detail page specific styles */
+        .project-detail {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1.5rem 1.5rem 3rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            color: #000;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .project-detail h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            line-height: 1.2;
+        }
+
+        .project-date {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-content h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+            font-style: normal;
+        }
+
+        .project-content h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-style: normal;
+        }
+
+        .project-content p {
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+            color: #333;
+        }
+
+        .project-content ul {
+            margin: 0.75rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .project-content li {
+            margin-bottom: 0.4rem;
+            line-height: 1.5;
+        }
+
+        .project-content ol {
+            margin: 0.75rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .project-content ol li {
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+        }
+
+        .project-content figure {
+            margin: 1.5rem 0;
+        }
+
+        .project-content figure img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            display: block;
+            border: 1px solid #e0e0e0;
+        }
+
+        .project-content figure.small img {
+            width: 40%;
+            max-width: 40%;
+        }
+
+        .project-content figure.medium img {
+            width: 50%;
+            max-width: 50%;
+        }
+
+        .project-content figure.inline {
+            display: inline-block;
+            width: 30%;
+            margin: 1rem 0.5rem;
+            vertical-align: top;
+        }
+
+        .project-content figcaption {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .project-content video {
+            width: 100%;
+            max-width: 640px;
+            height: auto;
+            display: block;
+            margin: 1.5rem 0;
+            border: 1px solid #e0e0e0;
+        }
+
+        .equation {
+            display: block;
+            overflow-x: auto;
+            padding: 0.75rem 0;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .inline-math {
+            font-style: normal;
+        }
+
+        .project-content a {
+            color: #000;
+            text-decoration: underline;
+        }
+
+        .project-content a:hover {
+            color: #666;
+        }
+
+        .project-content sup {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .note-box {
+            background: #f5f5f5;
+            border-left: 2px solid #000;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1.5rem 1rem;
+            }
+
+            .outline-sidebar {
+                left: 1rem;
+            }
+
+            .project-detail {
+                padding: 1.5rem 1rem 2.5rem;
+            }
+
+            .project-detail h1 {
+                font-size: 1.4rem;
+            }
+
+            .project-content figure.small img,
+            .project-content figure.medium img {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .project-content figure.inline {
+                width: 100%;
+                display: block;
+            }
+        }
+    </style>
+    <!-- MathJax for equation rendering -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            },
+            chtml: {
+                scale: 1.1,
+                mtextInheritFont: true
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <style>
+        /* Better MathJax rendering */
+        mjx-container {
+            font-family: 'Latin Modern Math', 'STIX Two Math', 'Times New Roman', serif !important;
+        }
+
+        mjx-math {
+            font-size: 1.05em !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <a href="../index.html" class="logo">Diana Wang</a>
+            <div class="nav-links">
+                <a href="../index.html">Projects</a>
+                <a href="../creative.html">Creative</a>
+                <a href="../about.html">About</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Outline Sidebar -->
+    <div class="outline-sidebar">
+        <div class="outline-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="outline-content">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#background">Background & Motivation</a></li>
+                <li><a href="#demo">Demo</a></li>
+                <li><a href="#system">System Diagram and Set Up</a></li>
+                <li><a href="#amplifier">Full-bridge Amplifier</a></li>
+                <li><a href="#boost">Boost Converter</a></li>
+                <li><a href="#sepic">SEPIC Converter</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="project-detail">
+        <a href="../index.html" class="back-link">← Back to Projects</a>
+
+        <h1>Leslie Speaker Guitar Pedal</h1>
+        <p class="project-date">Power Electronics</p>
+
+        <div class="project-content">
+            <h2 id="background">Background & Motivation</h2>
+
+            <p>The final project is an open-ended exploration that allows us to design and build anything related to power electronics in general. Interested in shoegaze rock music and guitar pedals, I wanted to design a mechanical guitar pedal based on a <a href="https://www.youtube.com/watch?v=7DqOOg8_Af0">Leslie speaker</a>. By rotating a mechanical structure beneath the speaker, the Leslie speaker modulates the frequency of the sound waves and create a vibrato effect that is reminiscent of those present in shoegaze music. Different from a classic Leslie speaker, my system will provide continuous speed control instead of two fixed settings.</p>
+
+            <h2 id="demo">Demo</h2>
+
+            <p>Unfortunately the mechanical rotor isn't doing a great job of shaping the sound waves, so the Leslie speaker effect isn't audible. Regardless, all of the power electronics is able to drive both the speaker and the motor and fulfills the project's goals. In the future, I plan on changing the mechanical arrangement of the speaker relative to the motor and the motor's print as well as how it's coupled to the shaft. Due to time limitations, I was unable to implement of all these changes before the project demo time.</p>
+
+            <p>In the video below, I am playing a song from my favorite band <a href="https://open.spotify.com/artist/3w93exjCQ2TMvLqGPPgf30?si=pbq2KKXpRyCsnACuARZ14w">chestnut bakery :)</a> and then increasing the motor's speed with a potentiometer that controls the input PWM's duty cycle.</p>
+
+            <p><sup>I have a tight current limit of 200 mA on the 9 V supply that drives everything, which is reached right around when the SEPIC's output voltage exceeds 12 V and thereby explains why the motor stopped at one point in the video (bc I turned the pot too much). To prevent over-voltage on the motor and for good practices, I should have implemented the PWM such that the maximum duty cycle corresponds to a 12 V output. However, I made sure to adjust the duty cycle while observing the output voltage during testing (since I would be probing it anyways when I'm testing).</sup></p>
+
+            <video controls>
+                <source src="../videos/leslie_speaker_demo.mov" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+            <figure class="small">
+                <img src="../images/leslie_box.jpg" alt="Leslie box's mechanical assembly">
+                <figcaption>Figure 1. Leslie box's mechanical assembly</figcaption>
+            </figure>
+
+            <h2 id="system">System Diagram and Set Up</h2>
+
+            <ul>
+                <li><strong>Input power</strong>
+                    <ul>
+                        <li>Rail for all converters: 9 V benchtop supply (3A limit from supply)</li>
+                        <li>Speaker rail: Adjustable 0 - 30 V benchtop supply (The speaker is pretty loud, so I demonstrated it at 1 V)</li>
+                    </ul>
+                </li>
+                <li><strong>Converters:</strong>
+                    <ul>
+                        <li>Boost: 12 V, 30 mA output</li>
+                        <li>SEPIC: 0 - 12 V adjustable rail, 30 mA output</li>
+                    </ul>
+                </li>
+                <li><strong>Other modules</strong>
+                    <ul>
+                        <li>Class D AD Modulated full-bridge amplifier</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <p>Most guitar pedals are powered by a 9 V supply, which is therefore chosen as the input voltage that powers all my converters and analog chips. The boost converter provides the 12 V for IR2125 gate drivers used in the Class D amplifier. I chose these gate drivers as they were the only ones available in lab that can drive both high- and low-side power MOSFETs with ease and less losses, enabling the speaker rail voltages to reach higher values for a loud audio output.</p>
+
+            <p>The SEPIC converter provides the adjustable rail with a maximum of 12 V for the DC motor and was chosen because I have already explored a buck-boost and flyback converter topology in previous labs and wanted to build a different step-up-and-down converter. A class D amplifier was used for its efficiency compared to other types of audio amplifiers, and a hybrid Butterworth LC filter at the output produces a near-linear, noise-minimized audio output.</p>
+
+            <h2 id="amplifier">Full-bridge Amplifier</h2>
+
+            <h3>Brief Conceptual Explanation</h3>
+
+            <p>The subsystem can be broken down into encoder (input audio signal → PWM signals with delay circuitry), full-bridge switching network (PWM signals → switching rails), and output filter (square wave signal → amplified audio signal).</p>
+
+            <p>Conceptually, the AD modulation amplifies the audio signal by encoding the amplitude of the audio signal as the duty cycle of a high frequency band. The output low-pass filter then extracts the DC value that tracks the audio signal waveform. The encoding is done by comparing a high frequency sawtooth wave to the audio input, offset by a reference voltage for proper comparison. The PWM waveform is then fed into a delay circuitry to prevent shoot through, and the same signals are shared diagonally across the fets (high-side of left rail and low-side of right rail shares the same signal).</p>
+
+            <h3>Design Outline</h3>
+
+            <p>I chose to use a hybrid Butterworth filter to maintain sensitivity for a wide range of low frequencies before the cutoff frequency. Given that 20 kHz is the upper limit of average human hearing range, I chose 30 kHz as the cutoff frequency to provide some leeway.</p>
+
+            <p>The hybrid filter is structured as such and can be thevenized into a LC filter resembling that of a buck converter. Simplifying the capacitor configuration (<span class="inline-math">C<sub>g</sub></span> in series and <span class="inline-math">C<sub>b</sub></span> in parallel), I derived the transfer function of the speaker (≈ 8Ω resistor) as:</p>
+
+            <p class="equation">\[\tilde{H}(s)=\frac{Z_{C_{th}}||R}{Z_{C_{th}}||R+2Z_{L_b}}=\frac{1}{1+2sL_b(\frac{1}{R}+sC_{th})}=\frac{1}{1+sL_b(\frac{2}{R}+2sC_{th})}\]</p>
+
+            <p>This resembles the output filter of a buck converter and allows the Thevenin model (Fig 3) to be developed.</p>
+
+            <figure class="small">
+                <img src="../images/hybrid_filter.png" alt="KiCad schematic of hybrid Butterworth filter">
+                <figcaption>Figure 2. Schematic of hybrid Butterworth filter</figcaption>
+            </figure>
+
+            <figure class="small">
+                <img src="../images/thevenized_hybrid_filter.png" alt="KiCad schematic of thevenized hybrid Butterworth filter">
+                <figcaption>Figure 3. Schematic of thevenized hybrid Butterworth filter</figcaption>
+            </figure>
+
+            <p>To design for a Butterworth filter, I set <span class="inline-math">Q = 1/√2</span> and selected <span class="inline-math">L<sub>b</sub></span>, <span class="inline-math">C<sub>g</sub></span>, <span class="inline-math">C<sub>b</sub></span> accordingly:</p>
+
+            <p class="equation">\[Q=R_{th}\sqrt{\frac{C_{th}}{L_{th}}}=\frac{R_{th}}{\omega_oL_b}=\frac{1}{\sqrt{2}}\]</p>
+
+            <p class="equation">\[L_b=\frac{\sqrt{2}\cdot{4\Omega}}{2\pi\cdot30 \text{ kHz}}\approx 30\,\mu\text{H}\]</p>
+
+            <p>Based on existing designs, the ratio <span class="inline-math">C<sub>g</sub> = 0.1C<sub>b</sub></span> yields ideal performance. Therefore, this ratio is used to compute <span class="inline-math">C<sub>b</sub></span>, <span class="inline-math">C<sub>g</sub></span>.</p>
+
+            <p class="equation">\[Q=R_{th}\omega_oC_{th}\]</p>
+
+            <p class="equation">\[C_{th}=2C_b+C_g=2.1C_b=\frac{1}{\sqrt{2}\cdot4\Omega\cdot(2\pi\cdot 30 \,\text{kHz})}\]</p>
+
+            <p class="equation">\[C_b\approx 0.447 \,\mu\text{F}, \;C_g \approx 0.0447\,\mu\text{F}\]</p>
+
+            <p>The currents through the inductor should be on an approximate order of 300mA maximum and is not close to saturating the powdered iron cores in lab. Therefore, the turn ratio and availability were main factors for picking an inductor core for me. Micrometals' T90-52 and T106-52 were readily available to me, as I used in a prior lab and was able to keep it. Therefore, I chose T90-52 and T106-52 to wind the 30μH inductors and ceramic 470nF and 47nF caps, as they were the available parts with the closest value and fairly stable capacitance at higher frequencies.</p>
+
+            <h3>Test Results</h3>
+
+            <p>The scopes in lab do not have a frequency response analysis function to obtain the experimental bode plot, so I captured the waveform at different input frequencies. At lower frequencies, the gain remains constant; starting from the cutoff, the gain begins to attenuate, matching the expected behavior of a Butterworth filter.</p>
+
+            <figure class="inline">
+                <img src="../images/butterworth_1khz.png" alt="Frequency response of Butterworth filer with 1 kHz input">
+                <figcaption>Figure 4a. Frequency response of Butterworth filer with 1 kHz input</figcaption>
+            </figure>
+
+            <figure class="inline">
+                <img src="../images/butterworth_10khz.png" alt="Frequency response of Butterworth filer with 10 kHz input">
+                <figcaption>Figure 4b. Frequency response of Butterworth filer with 10 kHz input</figcaption>
+            </figure>
+
+            <figure class="inline">
+                <img src="../images/butterworth_30khz.png" alt="Frequency response of Butterworth filer with 30 kHz input">
+                <figcaption>Figure 4c. Frequency response of Butterworth filer with 30 kHz input</figcaption>
+            </figure>
+
+            <figure class="inline">
+                <img src="../images/butterworth_50khz.png" alt="Frequency response of Butterworth filer with 50 kHz input">
+                <figcaption>Figure 4d. Frequency response of Butterworth filer with 50 kHz input</figcaption>
+            </figure>
+
+            <h2 id="boost">Boost Converter (Asynchronous)</h2>
+
+            <h3>Brief Conceptual Explanation</h3>
+
+            <p>A boost converter is essentially a buck converter that switches the input and output and thereby enables the output to step up the voltage. From a dynamical point of view, part of the switch state is spent charging the inductor, and the other is spent delivering the accumulated inductor current and the input current when the switch turns off to charge the capacitor. These two stages enable the capacitor to reach a higher voltage than the input.</p>
+
+            <h3>Design Outline</h3>
+
+            <p>The components that need to be considered are the input inductor, output capacitor, and the low-side FET. The two former components determine conditions such as continuous conduction mode (CCM) inductor current ripple, and output voltage ripple, and the last component need to tolerate the voltages and currents in the circuit. I also have to calculate the duty cycle to reach the desired output voltage of 12 V. The computations will proceed in the common order in which many converters are analyzed: (1) deriving the output voltage as a function of duty cycle and input voltage (2) deriving the expression for inductor current ripple (3) calculating the minimum inductance for CCM operation (4) calculating the minimum capacitance for a desired voltage ripple.</p>
+
+            <ol>
+                <li><strong>Output voltage:</strong> Applying the second volt balance rule, we obtain a closed form of the output voltage:
+                    <p class="equation">\[\langle V_L\rangle=0=\langle\frac{di_L}{dt}\rangle\]</p>
+                    <p class="equation">\[0=\frac{1}{T}\left(\int_{0}^{DT}\frac{V_{IN}}{L}dt+\int_{DT}^{T}\frac{V_{IN}-V_{OUT}}{L}dt\right)\]</p>
+                    <p class="equation">\[\frac{DTV_{IN}}{L}=\frac{(1-D)T(V_{OUT}-V_{IN})}{L}\implies V_{OUT}=\frac{1}{1-D}\]</p>
+                </li>
+
+                <li><strong>Inductor current ripple:</strong> The current ripple can also be computed from the inductor's constitutive equation. In steady state, assuming that the current ripple is about the same in the two switch states, it can be expressed in two ways.
+                    <p class="equation">\[\Delta i=\frac{V_{IN}DT}{L}=\frac{(V_{OUT}-V_{IN})(1-D)T}{L}\]</p>
+                </li>
+
+                <li><strong>CCM boundary:</strong> The circuit operates at the CCM boundary, about to cross DCM, when its average is less than half of the current ripple (which would bring its waveform to the zero-crossing). Using the expression derived from step 2, I can compute the minimum inductance needed at my operating conditions:
+                    <p class="equation">\[\langle i_L\rangle=\langle i_{IN}\rangle=\frac{P_{OUT}}{V_{IN}}\]</p>
+                    <p class="equation">\[\langle i_L\rangle=\frac{\langle i_{OUT}\rangle}{1-D}\gt\frac{\Delta i}{2}=\frac{V_{IN}DT}{2L}\]</p>
+                    <p class="equation">\[L\gt \frac{V_{IN}(1-D)DT}{2i_{OUT}}\]</p>
+                </li>
+
+                <li><strong>Output capacitor ripple:</strong> The ripple can be calculated from the RC decay when the switch is turned on using the constitutive equation.
+                    <p class="equation">\[i_C=C\frac{dV_c}{dt}\implies\Delta V_C=\frac{i_{OUT}}{C}DT\]</p>
+                    <p>For a given desired ΔV<sub>c</sub> (which I set to be 0.5 V in my design):</p>
+                    <p class="equation">\[C\gt\frac{i_{OUT}DT}{\Delta V_c}\]</p>
+                </li>
+
+                <li><strong>Diode sizing:</strong> The diode should have low forward voltage drop and be able to sustain the forward current and the reverse voltage from the boost's output. MUR120 is selected, as it satisfies all requirements with the minimum forward voltage drop in lab inventory.</li>
+            </ol>
+
+            <p>I set up all above equations in a Jupyter notebook and sized both L, C 30% higher than the calculated values. Operated at a switching frequency of 60kHz, the resultant component values are L ≈ 1406μH, C ≈ 0.1μF. I used a P26/16 ferrite core for its low core loss and high turn ratio with 24 awg wire, which can handle the input current. To further reduce voltage ripple, a 1μF ceramic capacitor was used.</p>
+
+            <h3>Test Results</h3>
+
+            <figure class="medium">
+                <img src="../images/boost_out.png" alt="Input PWM and Boost Output Voltage Ripple">
+                <figcaption>Figure 5a. Input PWM and Boost Output Voltage Ripple</figcaption>
+            </figure>
+
+            <figure class="medium">
+                <img src="../images/boost_out_zoomed.png" alt="Zoomed in view of input PWM and Boost Output Voltage Ripple waveform">
+                <figcaption>Figure 5b. Zoomed-in View of Input PWM and Boost Output Voltage Ripple waveform</figcaption>
+            </figure>
+
+            <p>Neglecting the spikes present in the waveform, the average voltage ripple if about 130 mV, which is close to the calculation for an output current of 30mA, C = 1μF, and f<sub>switching</sub> = 60kHz:</p>
+
+            <figure class="medium">
+                <img src="../images/jupyter_v_ripple.png" alt="Voltage ripple calculation">
+                <figcaption>Figure 5c. Voltage ripple calculation for selected component values and operating conditions</figcaption>
+            </figure>
+
+            <p>The spike is largely due to the parasitics across different boards responding to sudden changes in the gate drive. The imperfect measurement method further accentuates the spike in the output waveform by introducing parasitics to the circuit. Using PCBs, RF shields, and setting up accurate measurement methods would enable a more accurate waveform reading along with reduced spikes. For the scope, limitation of breadboards, and application of this course project, such approaches are not implemented.</p>
+
+            <h2 id="sepic">SEPIC Converter (Asynchronous)</h2>
+
+            <h3>Brief Conceptual Explanation</h3>
+
+            <p>The SEPIC converter works similarly to a buck-boost that enables a step-up or step-down in output voltage. By introducing a coupling capacitor that charges a second inductor, when the switch turns off, the circuit is able to charge the output capacitor from the top, thereby providing a non-inverted output voltage. The preserved polarity makes the SEPIC advantageous over the buck-boost converter, which results in an inverted output voltage. Alternatively, a designer could use a flyback converter to build a buck-boost to obtain a non-inverted output.</p>
+
+            <figure class="medium">
+                <img src="../images/sepic.png" alt="Schematic of Sepic Converter">
+                <figcaption>Figure 6. Schematic of Sepic Converter</figcaption>
+            </figure>
+
+            <h3>Design Outline</h3>
+
+            <ul>
+                <li>Output voltage: 12 V (rating of DC motor that I found in a makerspace)</li>
+                <li>Output current: 40 mA (the DC motor had a pretty constant current draw of 30 mA, I sized up to 40 mA to account for additional losses)</li>
+                <li>Switching frequency: 50 kHz</li>
+            </ul>
+
+            <p>The sizing procedure is quite similar to the boost converter's, expect there is an additional set of inductor and capacitor to consider. In addition, the input and output voltages and currents each add at the switch node, so the fet must be carefully sized to these values. I apply the same order and procedure of analysis detailed in the boost converter section to the SEPIC converter below.</p>
+
+            <ol>
+                <li><strong>Output voltage:</strong> We apply volt second-balance rule via the inductor current's rate of change.
+                    <p class="equation">\[0=\frac{1}{T}\left(\int_{0}^{DT}\frac{V_{IN}}{L_1}dt+\int_{DT}^{T}\frac{V_{IN}-V_{OUT}-V_{C_p}-V_D}{L_1}dt\right)\]</p>
+                    <p>Applying second voltage balance a second time on the same loop, since ⟨V<sub>L1</sub>⟩ = ⟨V<sub>L2</sub>⟩ = 0, ⟨V<sub>C<sub>p</sub></sub>⟩ = V<sub>IN</sub>. Therefore,</p>
+                    <p class="equation">\[\frac{DTV_{IN}}{L_1}=\frac{(1-D)T(V_{OUT}+V_D)}{L_1}\implies V_{OUT}+V_D=\frac{D}{1-D}V_{IN}\]</p>
+                    <p>Assuming negligible diode forward voltage drop, V<sub>OUT</sub> = DV<sub>IN</sub>/(1-D). For my input and output voltages, D ≈ 0.57</p>
+                </li>
+
+                <li><strong>Inductor current ripple:</strong> We use a similar assumption as in the boost converter section across the two switch states.
+                    <p class="equation">\[\Delta i_{L_1}=\frac{V_{IN}DT}{L_1}\implies L_1\gt\frac{V_{IN}DT}{\Delta i_{L_1}}\]</p>
+                    <p>I sized the current ripple to be 20% of the input current. Oversizing the inductor by 30% of the calculated value, I obtained L<sub>1</sub> = 280μH. One common method of implementing the SEPIC is to use a coupled inductor (a 1:1 transformer), whose mutual inductance doubles the total inductance of each winding. Therefore, I wound the coupled inductor with L<sub>1</sub>, L<sub>2</sub> = 140μH using a P26/16 ferrite core (and 24 awg wire) to minimize core loss (it will also not saturate the core with the current through the windings).</p>
+                    <p>The chosen inductor ripple satisfies CCM, which can be shown by substituting values and verifying that (done in Jupyter notebook):</p>
+                    <p class="equation">\[\langle i_{IN}\rangle\gt \Delta i_{L_1}/2\]</p>
+                </li>
+
+                <li><strong>Coupling capacitor:</strong> Since the converter operates at relatively low power, the current through the capacitor is relatively low and wouldn't be of concern for sizing the capacitor. The main consideration here was the capacitor voltage ripple. Even though i<sub>C<sub>p</sub></sub> ≠ i<sub>out</sub> ≠ i<sub>C<sub>o</sub></sub> both step 3 and 4 of the calculation here, it can be approximated as i<sub>OUT</sub>.
+                    <p class="equation">\[\Delta V_{C_p}=\frac{i_{C_p}DT}{C}=\frac{i_{OUT}DT}{C}\]</p>
+                    <p>I chose the limit the voltage ripple to be 0.5 V, resulting in a minimum capacitance of about 1μF.</p>
+                </li>
+
+                <li><strong>Output capacitor:</strong> I will assume that the capacitor has low ESR such that its effect on the voltage ripple is negligible. If that assumption fails with the final calculated value of capacitance and the component I will use, I will revisit the calculation. Similarly,
+                    <p class="equation">\[\Delta V_{C_o}=\frac{i_{C_o}DT}{C}=\frac{i_{OUT}DT}{C}\]</p>
+                    <p>Choosing the voltage ripple to be 0.5 V, I calculated 1μF as the minimum capacitance. To reduce the voltage ripple further and in observation of the similar ESR between 1μF and 2μF ceramic capacitors in lab, I used a 2μF ceramic cap.</p>
+                </li>
+
+                <li><strong>Diode sizing:</strong> By similar reasoning to the boost's design decision, I chose MUR120.</li>
+
+                <li><strong>MOSFET sizing:</strong> During the on-phase of the input switch, the inductor currents through L<sub>1</sub>, L<sub>2</sub> add. The average voltage drop across the coupling capacitor C<sub>p</sub> is V<sub>IN</sub> as established in earlier sections, with V<sub>OUT</sub> at its output node. Therefore, the fet should tolerate a maximum drain-source voltage of V<sub>OUT</sub> + V<sub>IN</sub> and a drain current of i<sub>L1</sub> + i<sub>L2</sub>. To obtain an expression for i<sub>L2</sub>, I can apply the ampere's 2nd balance rule.
+                    <p>During the on phase (DT): i<sub>L2</sub> = i<sub>C<sub>p</sub></sub></p>
+                    <p>During the switch-off phase (DT): i<sub>L1</sub> = -i<sub>C<sub>p</sub></sub></p>
+                    <p>Therefore,</p>
+                    <p class="equation">\[\frac{DTi_{L_2}}{C}-\frac{(1-D)Ti_{L_1}}{C}=0\]</p>
+                    <p class="equation">\[i_{L_2}=\frac{(1-D)}{D}i_{L_1}\]</p>
+                    <p>To account for the maximum drain current, I added the expected current ripple with a worst-case overestimate factor of 20%) to the computed average currents. From there, I obtained a maximum drain current of about 560 mA and drain voltage of 21 V. IRF1407 is the selected device, as it is the nMOS with the lowest R<sub>ds,on</sub> in lab inventory that also satisfies these requirements.</p>
+                </li>
+            </ol>
+
+            <h3>Test Results</h3>
+
+            <figure class="medium">
+                <img src="../images/sepic_d57_out.png" alt="SEPIC Converter output voltage ripple">
+                <figcaption>Figure 7a. SEPIC Output Voltage Ripple Waveform</figcaption>
+            </figure>
+
+            <figure class="medium">
+                <img src="../images/sepic_pwm.png" alt="SEPIC Converter PWM Waveform">
+                <figcaption>Figure 7b. SEPIC Converter PWM Waveform at D=0.57</figcaption>
+            </figure>
+
+            <p>The scope shots show a low voltage ripple of about 200 mV disregarding the spikes, which are visible at switching instants that were previously seen with the boost converter and explained for in that section.</p>
+        </div>
+    </div>
+</body>
+</html>
