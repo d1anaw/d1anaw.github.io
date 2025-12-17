@@ -3,113 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - Your Name</title>
+    <title>About - Diana Wang</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             color: #000;
             background: #fff;
             padding: 2rem;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
         }
-        
+
         header {
             margin-bottom: 3rem;
         }
-        
+
         nav {
             display: flex;
             gap: 1.5rem;
             justify-content: flex-end;
             margin-bottom: 2rem;
         }
-        
+
         nav a {
             color: #000;
             text-decoration: none;
             font-size: 0.9rem;
         }
-        
+
         nav a:hover {
             text-decoration: underline;
         }
-        
+
         .content {
             max-width: 650px;
         }
-        
+
         h1 {
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 2rem;
         }
-        
+
         .about-section {
             margin-bottom: 2.5rem;
         }
-        
+
         .about-section h2 {
             font-size: 0.95rem;
             font-weight: 600;
             margin-bottom: 0.8rem;
         }
-        
+
         .about-section p {
             font-size: 0.9rem;
             line-height: 1.7;
             color: #000;
             margin-bottom: 1rem;
         }
-        
+
         .about-section ul {
             font-size: 0.9rem;
             line-height: 1.7;
             color: #000;
             margin-left: 1.2rem;
         }
-        
+
         .about-section li {
             margin-bottom: 0.3rem;
         }
-        
-        .links-section {
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        .links-section h2 {
-            font-size: 0.95rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        
-        .links-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        
-        .links-list a {
-            color: #000;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-        
-        .links-list a:hover {
-            text-decoration: underline;
-        }
-        
+
         footer {
             margin-top: 6rem;
             padding-top: 2rem;
@@ -117,17 +89,17 @@
             display: flex;
             gap: 1.5rem;
         }
-        
+
         footer a {
             color: #000;
             text-decoration: none;
             font-size: 0.9rem;
         }
-        
+
         footer a:hover {
             text-decoration: underline;
         }
-        
+
         @media (max-width: 768px) {
             body {
                 padding: 1.5rem;
@@ -144,80 +116,46 @@
                 <a href="about.html">about</a>
             </nav>
         </header>
-        
+
         <main class="content">
             <h1>About</h1>
-            
+
             <div class="about-section">
                 <p>
-                    i'm a software engineer and researcher currently working on machine learning systems and ai safety. 
-                    i'm particularly interested in making ai systems more interpretable and aligned with human values.
+                    I'm a 3rd year student studying electrical engineering & computer science at MIT. I am still currently exploring a specific field of interest to pursue in the long term, but my research and project experience have been primarily focused on power electronics and electromagnetics. I am eager to enter and learn about different subdisciplines and look forward to further exploring the intersection of hardware and software, as well as digital and analog design, in my future coursework and personal projects.
+
                 </p>
+
                 <p>
-                    currently pursuing my masters in computer science at [university name], where i focus on 
-                    distributed systems and deep learning optimization. previously, i worked at [company name] 
-                    on [brief description of work].
+                    You can read more about my experiences in my <a href="docs/resume.pdf">resume</a> here.
                 </p>
+
             </div>
-            
+
             <div class="about-section">
                 <h2>research interests</h2>
                 <ul>
-                    <li>machine learning interpretability</li>
-                    <li>distributed systems and scalability</li>
-                    <li>ai safety and alignment</li>
-                    <li>computer vision applications</li>
-                    <li>natural language processing</li>
+                    <li>power electronics</li>
+                    <li>electromagnetics (sensors and actuator design)</li>
+                    <li>robotics</li>
+                    <li>digital design</li>
+                    <li>analog design</li>
                 </ul>
             </div>
-            
-            <div class="about-section">
-                <h2>experience</h2>
-                <p>
-                    [company/institution] — [role]<br>
-                    [dates]<br>
-                    <span style="color: #666; font-size: 0.85rem;">brief description of responsibilities and achievements</span>
-                </p>
-                <p>
-                    [company/institution] — [role]<br>
-                    [dates]<br>
-                    <span style="color: #666; font-size: 0.85rem;">brief description of responsibilities and achievements</span>
-                </p>
-            </div>
-            
-            <div class="about-section">
-                <h2>education</h2>
-                <p>
-                    [degree], [university name]<br>
-                    [year]<br>
-                    <span style="color: #666; font-size: 0.85rem;">relevant coursework or focus area</span>
-                </p>
-            </div>
-            
+
             <div class="about-section">
                 <h2>outside of work</h2>
                 <p>
-                    when i'm not coding or researching, i enjoy photography, hiking, and experimenting with 
-                    generative art. i'm always interested in connecting with people working on similar problems 
-                    or exploring new creative projects.
+                    When i'm not building circuits, teaching, or researching, I enjoy dancing (shoutout to my team
+                    <a href="https://ridonk.vercel.app/">MIT Ridonkulous</a>!), photography, and creative writing.
                 </p>
             </div>
-            
-            <div class="links-section">
-                <h2>connect</h2>
-                <div class="links-list">
-                    <a href="https://linkedin.com/in/yourprofile">linkedin</a>
-                    <a href="https://github.com/yourusername">github</a>
-                    <a href="https://twitter.com/yourusername">twitter</a>
-                    <a href="mailto:your@email.com">email</a>
-                </div>
-            </div>
         </main>
-        
+
         <footer>
-            <a href="https://linkedin.com/in/yourprofile">linkedin</a>
-            <a href="https://github.com/yourusername">github</a>
-            <a href="mailto:your@email.com">email</a>
+            <a href="https://linkedin.com/in/d1anawang">linkedin</a>
+            <!-- <a href="https://github.com/d1anaw">github</a> -->
+            <a href="mailto:jiamei@mit.edu">email</a>
         </footer>
     </div>
 </body>

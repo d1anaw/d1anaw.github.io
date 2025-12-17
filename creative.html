@@ -3,69 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creative - Your Name</title>
+    <title>Creative - Diana Wang</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             color: #000;
             background: #fff;
             padding: 2rem;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
         }
-        
+
         header {
             margin-bottom: 3rem;
         }
-        
+
         nav {
             display: flex;
             gap: 1.5rem;
             justify-content: flex-end;
             margin-bottom: 2rem;
         }
-        
+
         .intro {
             font-size: 0.95rem;
             line-height: 1.6;
             max-width: 600px;
         }
-        
+
         nav a {
             color: #000;
             text-decoration: none;
             font-size: 0.9rem;
         }
-        
+
         nav a:hover {
             text-decoration: underline;
         }
-        
+
         .filter-section {
             margin-bottom: 3rem;
         }
-        
+
         .filter-label {
             font-size: 0.85rem;
             color: #666;
             margin-bottom: 0.8rem;
         }
-        
+
         .filter-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 0.8rem;
         }
-        
+
         .filter-tag {
             font-size: 0.85rem;
             color: #666;
@@ -75,40 +75,40 @@
             cursor: pointer;
             text-decoration: none;
         }
-        
+
         .filter-tag:hover {
             color: #000;
             text-decoration: underline;
         }
-        
+
         .filter-tag.active {
             color: #000;
             text-decoration: underline;
         }
-        
+
         .creative-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 3rem 2rem;
         }
-        
+
         @media (max-width: 900px) {
             .creative-grid {
                 grid-template-columns: 1fr;
                 gap: 3rem;
             }
         }
-        
+
         .creative-item {
             text-decoration: none;
             color: #000;
             display: block;
         }
-        
+
         .creative-item.hidden {
             display: none;
         }
-        
+
         .creative-image {
             width: 100%;
             aspect-ratio: 16/10;
@@ -121,52 +121,52 @@
             color: #bbb;
             overflow: hidden;
         }
-        
+
         .creative-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
+
         .creative-item:hover .creative-image {
             background: #ebebeb;
         }
-        
+
         .creative-title {
             font-size: 0.95rem;
             font-weight: 500;
             margin-bottom: 0.2rem;
         }
-        
+
         .creative-meta {
             display: flex;
             gap: 0.5rem;
             align-items: center;
             margin-bottom: 0.3rem;
         }
-        
+
         .creative-date {
             font-size: 0.85rem;
             color: #666;
         }
-        
+
         .creative-tags {
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
         }
-        
+
         .creative-tag {
             font-size: 0.8rem;
             color: #999;
         }
-        
+
         .creative-description {
             font-size: 0.85rem;
             color: #666;
             line-height: 1.5;
         }
-        
+
         footer {
             margin-top: 6rem;
             padding-top: 2rem;
@@ -174,17 +174,17 @@
             display: flex;
             gap: 1.5rem;
         }
-        
+
         footer a {
             color: #000;
             text-decoration: none;
             font-size: 0.9rem;
         }
-        
+
         footer a:hover {
             text-decoration: underline;
         }
-        
+
         @media (max-width: 768px) {
             body {
                 padding: 1.5rem;
@@ -201,33 +201,33 @@
                 <a href="about.html">about</a>
             </nav>
             <div class="intro">
-                creative explorations in photography, illustration, and digital art
+                creative explorations in dance and photography, to be updated...
             </div>
         </header>
-        
+
         <div class="filter-section">
             <div class="filter-label">filter by:</div>
             <div class="filter-tags" id="filterTags">
                 <!-- Filters will be generated here -->
             </div>
         </div>
-        
+
         <main>
             <div class="creative-grid" id="creativeGrid">
                 <!-- Creative items will be generated here -->
             </div>
         </main>
-        
+
         <footer>
             <a href="https://linkedin.com/in/yourprofile">linkedin</a>
             <a href="https://github.com/yourusername">github</a>
             <a href="mailto:your@email.com">email</a>
         </footer>
     </div>
-    
+
     <!-- Load creative data -->
     <script src="creative-data.js"></script>
-    
+
     <script>
         // Generate filter tags
         const filterTagsContainer = document.getElementById('filterTags');
@@ -238,7 +238,7 @@
             button.textContent = category.label;
             filterTagsContainer.appendChild(button);
         });
-        
+
         // Generate creative items
         const creativeGrid = document.getElementById('creativeGrid');
         creativeItems.forEach(item => {
@@ -246,10 +246,10 @@
             creativeItem.href = item.link;
             creativeItem.className = 'creative-item';
             creativeItem.dataset.tags = item.tags.join(',');
-            
+
             const creativeImage = document.createElement('div');
             creativeImage.className = 'creative-image';
-            
+
             if (item.image && item.image !== 'images/placeholder.jpg') {
                 const img = document.createElement('img');
                 img.src = item.image;
@@ -258,18 +258,18 @@
             } else {
                 creativeImage.textContent = 'image';
             }
-            
+
             const creativeTitle = document.createElement('div');
             creativeTitle.className = 'creative-title';
             creativeTitle.textContent = item.title;
-            
+
             const creativeMeta = document.createElement('div');
             creativeMeta.className = 'creative-meta';
-            
+
             const creativeDate = document.createElement('div');
             creativeDate.className = 'creative-date';
             creativeDate.textContent = item.date;
-            
+
             const creativeTags = document.createElement('div');
             creativeTags.className = 'creative-tags';
             item.tags.forEach(tag => {
@@ -278,34 +278,34 @@
                 tagSpan.textContent = tag;
                 creativeTags.appendChild(tagSpan);
             });
-            
+
             creativeMeta.appendChild(creativeDate);
             creativeMeta.appendChild(creativeTags);
-            
+
             const creativeDescription = document.createElement('div');
             creativeDescription.className = 'creative-description';
             creativeDescription.textContent = item.description;
-            
+
             creativeItem.appendChild(creativeImage);
             creativeItem.appendChild(creativeTitle);
             creativeItem.appendChild(creativeMeta);
             creativeItem.appendChild(creativeDescription);
-            
+
             creativeGrid.appendChild(creativeItem);
         });
-        
+
         // Filter functionality
         const filterButtons = document.querySelectorAll('.filter-tag');
         const creativeItems = document.querySelectorAll('.creative-item');
-        
+
         filterButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const filter = button.dataset.filter;
-                
+
                 // Update active state
                 filterButtons.forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
-                
+
                 // Filter items
                 creativeItems.forEach(item => {
                     if (filter === 'all') {
