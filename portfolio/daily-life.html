@@ -11,7 +11,7 @@
 <body>
 
 <nav id="nav">
-  <a class="nav-name" href="index.html">Your Name</a>
+  <a class="nav-name" href="index.html">Diana Wang</a>
   <ul class="nav-links">
     <li><a href="daily-life.html" class="active">Daily Life</a></li>
     <li><a href="events.html">Events</a></li>
@@ -33,7 +33,7 @@
 </main>
 
 <footer>
-  <span>Your Name</span>
+  <span>Diana Wang</span>
   <span id="footer-year"></span>
 </footer>
 
@@ -42,48 +42,16 @@
   <img id="lightbox-img" src="" alt="">
 </div>
 
+<script src="watermark.js"></script>
 <script>
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 10);
+  document.getElementById('nav') && window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
   }, { passive: true });
-
-  const lb    = document.getElementById('lightbox');
-  const lbImg = document.getElementById('lightbox-img');
+  const lb = document.getElementById('lightbox');
   document.getElementById('lightbox-close').addEventListener('click', () => lb.classList.remove('open'));
   lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('open'); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
-
-  const fadeObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.style.opacity = 1; e.target.style.transform = 'none'; fadeObs.unobserve(e.target); }
-    });
-  }, { threshold: 0.08 });
-
-  async function loadGrid() {
-    const grid = document.getElementById('photo-grid');
-    try {
-      const res    = await fetch('../data/daily.json');
-      const photos = await res.json();
-      photos.forEach(photo => {
-        const item = document.createElement('div');
-        item.className = 'grid-item';
-        item.style.cssText = 'opacity:0;transform:translateY(12px);transition:opacity .5s,transform .5s';
-        const img = document.createElement('img');
-        img.src = photo.src; img.alt = photo.caption || ''; img.loading = 'lazy';
-        img.addEventListener('click', () => { lbImg.src = img.src; lbImg.alt = img.alt; lb.classList.add('open'); });
-        item.appendChild(img);
-        if (photo.caption) {
-          const cap = document.createElement('div');
-          cap.className = 'caption'; cap.textContent = photo.caption;
-          item.appendChild(cap);
-        }
-        grid.appendChild(item);
-        fadeObs.observe(item);
-      });
-    } catch(e) { console.warn('Could not load daily.json'); }
-  }
-  loadGrid();
+  loadGrid('data/daily.json', 'photo-grid');
   document.getElementById('footer-year').textContent = new Date().getFullYear();
 </script>
 </body>

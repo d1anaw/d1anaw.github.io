@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Name</title>
+<title>Diana Wang</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
 <style>
@@ -324,7 +324,7 @@ footer {
   "></div>
 
   <div id="hero-text">
-    <h1>Your Name</h1>
+    <h1>Diana Wang</h1>
     <p>Photography &nbsp;·&nbsp; Daily Life &nbsp;·&nbsp; Events</p>
   </div>
 
@@ -336,7 +336,7 @@ footer {
 
 <!-- ── NAV ── -->
 <nav id="nav">
-  <a class="nav-name" href="#">Your Name</a>
+  <a class="nav-name" href="#">Diana Wang</a>
   <ul class="nav-links">
     <li><a href="#creative" class="active" data-section="creative">Creative</a></li>
     <li><a href="#events" data-section="events">Events</a></li>
@@ -389,7 +389,7 @@ footer {
 </section>
 
 <footer>
-  <span>Your Name</span>
+  <span>Diana Wang</span>
   <span id="yr"></span>
 </footer>
 
@@ -399,6 +399,7 @@ footer {
   <img id="lb-img" src="" alt="">
 </div>
 
+<script src="watermark.js"></script>
 <script>
 // ── HERO IMAGE LOAD ──
 const heroImg = document.getElementById('hero-img');
@@ -427,53 +428,6 @@ function attachLightbox(img) {
 document.getElementById('lb-x').onclick = () => lb.classList.remove('on');
 lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('on'); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('on'); });
-
-// ── FADE-IN OBSERVER ──
-const fadeObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      fadeObs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.08 });
-
-// ── BUILD GRID FROM JSON ──
-// Shows up to `limit` photos from the JSON (index page shows preview only)
-async function loadGrid(jsonPath, containerId, limit = Infinity) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-  try {
-    const res   = await fetch(jsonPath);
-    const photos = await res.json();
-    const slice  = limit === Infinity ? photos : photos.slice(0, limit);
-
-    slice.forEach(photo => {
-      const item = document.createElement('div');
-      item.className = 'm-item';
-
-      const img = document.createElement('img');
-      img.src     = photo.src;
-      img.alt     = photo.caption || '';
-      img.loading = 'lazy';
-      item.appendChild(img);
-      attachLightbox(img);
-
-      if (photo.caption) {
-        const cap = document.createElement('div');
-        cap.className   = 'cap';
-        cap.textContent = photo.caption;
-        item.appendChild(cap);
-      }
-
-      container.appendChild(item);
-      fadeObs.observe(item);
-    });
-  } catch (e) {
-    // JSON not found or empty — show nothing (no placeholders)
-    console.warn('Could not load', jsonPath);
-  }
-}
 
 // index page: show first 3 from each section as preview
 loadGrid('data/creative.json', 'grid-creative', 3);
