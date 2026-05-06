@@ -1,6 +1,15 @@
 // Edit this file to add/update projects
 const projects = [
     {
+        title: "HF/VHF 30MHz Class E Inverter",
+        date: "February 2026",
+        tags: ["power", "research"],
+        image: "./images/classE_schematic.jpg",
+        description: "Designed a Class-E inverter outputting 30MHz AC power with high efficiency via optimization of resonant tank parameters and GaN device selection",
+        link: "projects/classE-inverter.html"
+    },
+    
+    {
         title: "Leslie Speaker 'Pedal'",
         date: "December 2025",
         tags: ["power", "course"],

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Suisse+Int%27l:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f4f0;
+    --fg: #1a1a18;
+    --muted: #8a8880;
+    --nav-h: 52px;
+    --gap: 3px;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--nav-h);
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    z-index: 100;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+  nav.scrolled { border-color: rgba(26,26,24,0.1); }
+
+  .nav-name {
+    font-family: 'EB Garamond', serif;
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    color: var(--fg);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--fg); }
+
+  .nav-social {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+  }
+  .nav-social a {
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .nav-social a:hover { color: var(--fg); }
+
+  /* ── MAIN ── */
+  main {
+    padding-top: var(--nav-h);
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-label {
+    padding: 48px 28px 20px;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+  .section-label h2 {
+    font-family: 'EB Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -0.01em;
+  }
+  .section-label span {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── MASONRY GRID ── */
+  .grid {
+    columns: 3;
+    column-gap: var(--gap);
+    padding: 0 var(--gap) var(--gap);
+  }
+
+  @media (max-width: 900px) { .grid { columns: 2; } }
+  @media (max-width: 560px) { .grid { columns: 1; } }
+
+  .grid-item {
+    break-inside: avoid;
+    margin-bottom: var(--gap);
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    background: #dddbd5;
+  }
+
+  .grid-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                filter 0.4s ease;
+    filter: saturate(0.92);
+  }
+
+  .grid-item:hover img {
+    transform: scale(1.03);
+    filter: saturate(1);
+  }
+
+  .grid-item .caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 32px 14px 12px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.38));
+    color: #fff;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .grid-item:hover .caption { opacity: 1; }
+
+  /* ── PLACEHOLDER TILES (before real photos) ── */
+  .placeholder {
+    background: var(--ph, #d8d6d0);
+    width: 100%;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    height: 1px;
+    background: rgba(26,26,24,0.1);
+    margin: 0 28px;
+  }
+
+  /* ── LIGHTBOX ── */
+  #lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+  }
+  #lightbox.open { display: flex; }
+  #lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+  }
+  #lightbox-close {
+    position: absolute;
+    top: 20px; right: 28px;
+    color: rgba(255,255,255,0.6);
+    font-size: 24px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  #lightbox-close:hover { color: #fff; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 48px 28px;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="nav-name" href="#">Your Name</a>
+  <ul class="nav-links">
+    <li><a href="#daily-life" class="nav-link">Daily Life</a></li>
+    <li><a href="#events" class="nav-link">Events</a></li>
+    <li><a href="#creative" class="nav-link">Creative</a></li>
+  </ul>
+  <div class="nav-social">
+    <a href="#">Instagram</a>
+    <a href="#">About</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ── DAILY LIFE ── -->
+  <section id="daily-life">
+    <div class="section-label">
+      <h2>Daily Life</h2>
+      <span>Everyday moments</span>
+    </div>
+
+    <div class="grid" id="grid-daily">
+      <!-- Replace src with your actual image paths, e.g. src="images/daily/01.jpg" -->
+      <!-- Each item: <div class="grid-item"><img src="..." alt="..."><div class="caption">Caption text</div></div> -->
+
+      <!-- PLACEHOLDER TILES — delete these once you add real photos -->
+      <div class="grid-item"><div class="placeholder" style="height:280px;--ph:#d4d2cc"></div></div>
+      <div class="grid-item"><div class="placeholder" style="height:360px;--ph:#cac8c2"></div></div>
+      <div class="grid-item"><div class="placeholder" style="height:240px;--ph:#d0cec8"></div></div>
+      <div class="grid-item"><div class="placeholder" style="height:320px;--ph:#c8c6c0"></div></div>
+      <div class="grid-item"><div class="placeholder" style="height:260px;--ph:#d4d2cc"></div></div>
+      <div class="grid-item"><div class="placeholder" style="height:300px;--ph:#cec bc5"></div></div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ── EVENTS ── -->
+  <section id="events">
+    <div class="section-label">
+      <h2>Events</h2>
+      <span>Concerts &amp; performances</span>
+    </div>
+
+    <div class="grid" id="grid-events">
+      <div class="grid-item"><div class="placeholder" style="height:380px;--ph:#c4c2bc"></div></div>
+      <div class="grid-item"><div class="placeholder" style="height:260px;--ph:#ccc ac4"></div></div>
+      <div class="grid-item"><div class="placeholder" style="height:340px;--ph:#c8c6c0"></div></div>
+      <div class="grid-item"><div class="placeholder" style="height:290px;--ph:#c0beb8"></div></div>
+      <div class="grid-item"><div class="placeholder" style="height:350px;--ph:#c4c2bc"></div></div>
+      <div class="grid-item"><div class="placeholder" style="height:270px;--ph:#cac8c2"></div></div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ── CREATIVE ── -->
+  <section id="creative">
+    <div class="section-label">
+      <h2>Creative</h2>
+      <span>Photography &amp; art</span>
+    </div>
+
+    <div class="grid" id="grid-creative">
+      <div class="grid-item"><div class="placeholder" style="height:420px;--ph:#bcbab4"></div></div>
+      <div class="grid-item"><div class="placeholder" style="height:280px;--ph:#c4c2bc"></div></div>
+      <div class="grid-item"><div class="placeholder" style="height:360px;--ph:#c0beb8"></div></div>
+      <div class="grid-item"><div class="placeholder" style="height:300px;--ph:#b8b6b0"></div></div>
+      <div class="grid-item"><div class="placeholder" style="height:380px;--ph:#bcbab4"></div></div>
+      <div class="grid-item"><div class="placeholder" style="height:250px;--ph:#c4c2bc"></div></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span>Your Name — Portfolio</span>
+  <span id="footer-year"></span>
+</footer>
+
+<!-- Lightbox -->
+<div id="lightbox">
+  <button id="lightbox-close" aria-label="Close">&times;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+  // Nav scroll border
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+  }, { passive: true });
+
+  // Active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(s => observer.observe(s));
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Lightbox (works with real <img> grid items)
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+
+  document.querySelectorAll('.grid-item img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('open');
+    });
+  });
+
+  document.getElementById('lightbox-close').addEventListener('click', () => {
+    lightbox.classList.remove('open');
+  });
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) lightbox.classList.remove('open');
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') lightbox.classList.remove('open');
+  });
+
+  // Footer year
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

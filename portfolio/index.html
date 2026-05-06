@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Name</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f5f4f0;
+  --fg: #1a1a18;
+  --muted: #8a8880;
+  --gap: 3px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+}
+
+/* ── HERO ── */
+#hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #1a2a1a;
+}
+
+#hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+  /* Replace src below with your hero image path, e.g. src="images/hero.jpg" */
+  filter: saturate(1.08) brightness(0.82);
+  transform: scale(1.04);
+  transition: transform 8s ease-out;
+}
+#hero-img.loaded { transform: scale(1); }
+
+/* dark gradient at bottom so text reads cleanly */
+#hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom,
+      rgba(0,0,0,0.08) 0%,
+      rgba(0,0,0,0.0)  35%,
+      rgba(0,0,0,0.0)  55%,
+      rgba(0,0,0,0.45) 100%);
+  z-index: 1;
+}
+
+/* hero text */
+#hero-text {
+  position: absolute;
+  bottom: 52px;
+  left: 48px;
+  z-index: 2;
+  color: #f5f2e8;
+}
+
+#hero-text h1 {
+  font-family: 'EB Garamond', serif;
+  font-size: clamp(36px, 5vw, 62px);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin-bottom: 10px;
+}
+
+#hero-text p {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(245,242,232,0.6);
+}
+
+/* scroll cue */
+#scroll-cue {
+  position: absolute;
+  bottom: 52px;
+  right: 48px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeUp 1s ease 1.2s forwards;
+}
+.sc-label {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245,242,232,0.45);
+  writing-mode: vertical-rl;
+}
+.sc-line {
+  width: 1px; height: 44px;
+  background: rgba(245,242,232,0.3);
+  animation: scPulse 2.4s ease-in-out 1.2s infinite;
+}
+@keyframes scPulse {
+  0%,100% { transform: scaleY(1); opacity: 0.3; }
+  50%      { transform: scaleY(0.55); opacity: 0.7; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 50;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  border-bottom: 1px solid rgba(26,26,24,0.08);
+}
+
+.nav-name {
+  font-family: 'EB Garamond', serif;
+  font-size: 17px;
+  font-style: italic;
+  color: var(--fg);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+.nav-links a:hover,
+.nav-links a.active { color: var(--fg); }
+
+.nav-right {
+  display: flex;
+  gap: 20px;
+}
+.nav-right a {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+.nav-right a:hover { color: var(--fg); }
+
+/* ── SECTION HEADERS ── */
+.section-head {
+  padding: 52px 28px 22px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.section-head-left {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+.section-head h2 {
+  font-family: 'EB Garamond', serif;
+  font-size: 30px;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+.section-head span {
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.view-all {
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--muted);
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 1px;
+  transition: color 0.2s;
+}
+.view-all:hover { color: var(--fg); }
+
+/* ── MASONRY ── */
+.masonry {
+  columns: 3;
+  column-gap: var(--gap);
+  padding: 0 var(--gap) var(--gap);
+}
+@media (max-width: 860px) { .masonry { columns: 2; } }
+@media (max-width: 520px) { .masonry { columns: 1; } }
+
+.m-item {
+  break-inside: avoid;
+  margin-bottom: var(--gap);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  background: #d8d6d0;
+  /* staggered fade-in on load */
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.m-item.visible {
+  opacity: 1;
+  transform: none;
+}
+.m-item img {
+  display: block;
+  width: 100%; height: auto;
+  transition: transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s;
+  filter: saturate(0.9);
+}
+.m-item:hover img {
+  transform: scale(1.035);
+  filter: saturate(1.02);
+}
+.m-item .cap {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 30px 14px 11px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.3));
+  color: #fff;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.m-item:hover .cap { opacity: 1; }
+
+.ph {
+  width: 100%; display: block;
+  background: var(--c, #d0cec8);
+}
+
+/* ── SECTION DIVIDER ── */
+.divider {
+  height: 1px;
+  background: rgba(26,26,24,0.08);
+  margin: 0 28px;
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 52px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── LIGHTBOX ── */
+#lb {
+  position: fixed; inset: 0;
+  background: rgba(15,12,10,0.95);
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+#lb.on { display: flex; }
+#lb img {
+  max-width: 90vw; max-height: 90vh;
+  object-fit: contain;
+  box-shadow: 0 0 80px rgba(0,0,0,0.5);
+}
+#lb-x {
+  position: absolute; top: 24px; right: 32px;
+  color: rgba(240,236,224,0.5);
+  font-size: 24px; background: none; border: none;
+  cursor: pointer; line-height: 1;
+  transition: color 0.2s;
+}
+#lb-x:hover { color: rgba(240,236,224,1); }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <!--
+    Replace the div below with a real image:
+    <img id="hero-img" src="images/hero.jpg" alt="hero">
+
+    Until then, a placeholder gradient sits here.
+  -->
+  <div id="hero-img" style="
+    position:absolute;inset:0;
+    background: linear-gradient(160deg,#2a4a2a 0%,#1a3a4a 40%,#0d1f3c 100%);
+  "></div>
+
+  <div id="hero-text">
+    <h1>Your Name</h1>
+    <p>Photography &nbsp;·&nbsp; Daily Life &nbsp;·&nbsp; Events</p>
+  </div>
+
+  <div id="scroll-cue">
+    <span class="sc-label">Scroll</span>
+    <div class="sc-line"></div>
+  </div>
+</section>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <a class="nav-name" href="#">Your Name</a>
+  <ul class="nav-links">
+    <li><a href="#creative" class="active" data-section="creative">Creative</a></li>
+    <li><a href="#events" data-section="events">Events</a></li>
+    <li><a href="#daily" data-section="daily">Daily Life</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#">Instagram</a>
+    <a href="#">About</a>
+  </div>
+</nav>
+
+<!-- ── CREATIVE ── -->
+<section id="creative">
+  <div class="section-head">
+    <div class="section-head-left">
+      <h2>Creative</h2>
+      <span>Photography &amp; art</span>
+    </div>
+    <a class="view-all" href="creative.html">View all</a>
+  </div>
+  <div class="masonry" id="grid-creative"></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── EVENTS ── -->
+<section id="events">
+  <div class="section-head">
+    <div class="section-head-left">
+      <h2>Events</h2>
+      <span>Concerts &amp; performances</span>
+    </div>
+    <a class="view-all" href="events.html">View all</a>
+  </div>
+  <div class="masonry" id="grid-events"></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── DAILY LIFE ── -->
+<section id="daily">
+  <div class="section-head">
+    <div class="section-head-left">
+      <h2>Daily Life</h2>
+      <span>Everyday moments</span>
+    </div>
+    <a class="view-all" href="daily-life.html">View all</a>
+  </div>
+  <div class="masonry" id="grid-daily"></div>
+</section>
+
+<footer>
+  <span>Your Name</span>
+  <span id="yr"></span>
+</footer>
+
+<!-- ── LIGHTBOX ── -->
+<div id="lb">
+  <button id="lb-x">&times;</button>
+  <img id="lb-img" src="" alt="">
+</div>
+
+<script>
+// ── HERO IMAGE LOAD ──
+const heroImg = document.getElementById('hero-img');
+if (heroImg.tagName === 'IMG') {
+  heroImg.addEventListener('load', () => heroImg.classList.add('loaded'));
+  if (heroImg.complete) heroImg.classList.add('loaded');
+}
+
+// ── HERO PARALLAX ──
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (y < window.innerHeight * 1.2 && heroImg.tagName === 'IMG') {
+    heroImg.style.transform = `scale(1) translateY(${y * 0.28}px)`;
+  }
+}, { passive: true });
+
+// ── LIGHTBOX ──
+const lb    = document.getElementById('lb');
+const lbImg = document.getElementById('lb-img');
+function attachLightbox(img) {
+  img.addEventListener('click', () => {
+    lbImg.src = img.src; lbImg.alt = img.alt;
+    lb.classList.add('on');
+  });
+}
+document.getElementById('lb-x').onclick = () => lb.classList.remove('on');
+lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('on'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('on'); });
+
+// ── FADE-IN OBSERVER ──
+const fadeObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      fadeObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+
+// ── BUILD GRID FROM JSON ──
+// Shows up to `limit` photos from the JSON (index page shows preview only)
+async function loadGrid(jsonPath, containerId, limit = Infinity) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  try {
+    const res   = await fetch(jsonPath);
+    const photos = await res.json();
+    const slice  = limit === Infinity ? photos : photos.slice(0, limit);
+
+    slice.forEach(photo => {
+      const item = document.createElement('div');
+      item.className = 'm-item';
+
+      const img = document.createElement('img');
+      img.src     = photo.src;
+      img.alt     = photo.caption || '';
+      img.loading = 'lazy';
+      item.appendChild(img);
+      attachLightbox(img);
+
+      if (photo.caption) {
+        const cap = document.createElement('div');
+        cap.className   = 'cap';
+        cap.textContent = photo.caption;
+        item.appendChild(cap);
+      }
+
+      container.appendChild(item);
+      fadeObs.observe(item);
+    });
+  } catch (e) {
+    // JSON not found or empty — show nothing (no placeholders)
+    console.warn('Could not load', jsonPath);
+  }
+}
+
+// index page: show first 3 from each section as preview
+loadGrid('data/creative.json', 'grid-creative', 3);
+loadGrid('data/events.json',   'grid-events',   3);
+loadGrid('data/daily.json',    'grid-daily',    3);
+
+// ── ACTIVE NAV on scroll ──
+const navLinks = document.querySelectorAll('.nav-links a');
+['creative','events','daily'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const a = document.querySelector(`.nav-links a[data-section="${id}"]`);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 }).observe(el);
+});
+
+document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
