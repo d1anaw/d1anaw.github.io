@@ -33,5 +33,20 @@
       { "src": "images/events/2025fa-donk-photoshoot/4-Job_0852.jpg", "caption": "" },
       { "src": "images/events/2025fa-donk-photoshoot/5-IMG_7946.jpg", "caption": "" }
     ]
-  }
+  },
+
+    {
+    "event": "2024 Fall Donk Photoshoot",
+    "date": "",
+    "photos": [
+      { "src": "images/events/24fa-donk/_MG_4887.jpg", "caption": "" },
+      { "src": "images/events/24fa-donk/1-R0050822.jpg", "caption": "" },
+      { "src": "images/events/24fa-donk/2-R0050865.jpg", "caption": "" },
+      { "src": "images/events/24fa-donk/3-_MG_4909.jpg", "caption": "" },
+      { "src": "images/events/24fa-donk/4-_MG_4913.jpg", "caption": "" },
+      { "src": "images/events/24fa-donk/5-_MG_4920.jpg", "caption": "" },
+      { "src": "images/events/24fa-donk/6-_MG_4981.jpg", "caption": "" },
+      { "src": "images/events/24fa-donk/7-_MG_4987.jpg", "caption": "" }
+    ]
+  },
 ]
