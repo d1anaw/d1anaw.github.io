@@ -399,14 +399,6 @@ if (heroImg.tagName === 'IMG') {
   if (heroImg.complete) heroImg.classList.add('loaded');
 }
 
-// ── HERO PARALLAX ──
-window.addEventListener('scroll', () => {
-  const y = window.scrollY;
-  if (y < window.innerHeight * 1.2 && heroImg.tagName === 'IMG') {
-    heroImg.style.transform = `scale(1) translateY(${y * 0.28}px)`;
-  }
-}, { passive: true });
-
 // ── LIGHTBOX ──
 const lb    = document.getElementById('lb');
 const lbImg = document.getElementById('lb-img');
