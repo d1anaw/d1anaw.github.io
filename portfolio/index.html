@@ -312,7 +312,7 @@ footer {
 
 <!-- ── HERO ── -->
 <section id="hero">
-  <img id="hero-img" src="images/hero.jpg" alt="hero">
+<img id="hero-img" src="images/hero.jpg" alt="hero">
 
   <div id="hero-text">
     <h1>Diana Wang</h1>
@@ -475,10 +475,10 @@ async function loadGrid(jsonPath, containerId, limit = 3) {
     console.warn('Could not load', jsonPath, e);
   }
 }
-// index page: show first 3 from each section as preview
-loadGrid('data/creative.json', 'grid-creative', 3);
-loadGrid('data/events.json',   'grid-events',   3);
-loadGrid('data/daily.json',    'grid-daily',    3);
+// index page: show first 4 from each section as preview
+loadGrid('data/creative.json', 'grid-creative', 4);
+loadGrid('data/events.json',   'grid-events',   4);
+loadGrid('data/daily.json',    'grid-daily',    4);
 
 // ── ACTIVE NAV on scroll ──
 const navLinks = document.querySelectorAll('.nav-links a');
