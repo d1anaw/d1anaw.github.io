@@ -444,7 +444,8 @@ async function loadGrid(jsonPath, containerId, limit = 3) {
     for (const photo of slice) {
       const item = document.createElement('div');
       item.className = 'm-item';
-      item.style.cssText = 'opacity:0;transform:translateY(12px);transition:opacity .5s,transform .5s';
+      item.style.cssText = 'opacity:1;transform:none;';
+
 
       const img   = document.createElement('img');
       img.alt     = photo.caption || '';
