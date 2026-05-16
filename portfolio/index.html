@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diana Wang</title>
+<title>Your Name</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
 <style>
@@ -316,14 +316,14 @@ footer {
 
     <img id="hero-img" src="images/cover.jpg" alt="hero">
 
-  <!-- <div id="hero-img" style="
+
+  <div id="hero-img" style="
     position:absolute;inset:0;
     background: linear-gradient(160deg,#2a4a2a 0%,#1a3a4a 40%,#0d1f3c 100%);
-  "></div> -->
-
+  "></div>
 
   <div id="hero-text">
-    <h1>Diana Wang</h1>
+    <h1>Your Name</h1>
     <p>Photography &nbsp;·&nbsp; Daily Life &nbsp;·&nbsp; Events</p>
   </div>
 
@@ -335,7 +335,7 @@ footer {
 
 <!-- ── NAV ── -->
 <nav id="nav">
-  <a class="nav-name" href="#">Diana Wang</a>
+  <a class="nav-name" href="#">Your Name</a>
   <ul class="nav-links">
     <li><a href="#creative" class="active" data-section="creative">Creative</a></li>
     <li><a href="#events" data-section="events">Events</a></li>
@@ -388,7 +388,7 @@ footer {
 </section>
 
 <footer>
-  <span>Diana Wang</span>
+  <span>Your Name</span>
   <span id="yr"></span>
 </footer>
 
@@ -398,7 +398,6 @@ footer {
   <img id="lb-img" src="" alt="">
 </div>
 
-<script src="watermark.js"></script>
 <script>
 // ── HERO IMAGE LOAD ──
 const heroImg = document.getElementById('hero-img');
@@ -428,6 +427,69 @@ document.getElementById('lb-x').onclick = () => lb.classList.remove('on');
 lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('on'); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('on'); });
 
+// ── FADE-IN OBSERVER ──
+const fadeObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      fadeObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+
+// ── BUILD GRID FROM JSON ──
+// Handles both flat arrays and grouped (series/event) arrays
+async function loadGrid(jsonPath, containerId, limit = 3) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  try {
+    const res  = await fetch(jsonPath);
+    const data = await res.json();
+
+    // flatten grouped format into a single photos array
+    let photos;
+    if (data[0] && (data[0].photos)) {
+      photos = data.flatMap(group => group.photos);
+    } else {
+      photos = data;
+    }
+
+    const slice = photos.slice(0, limit);
+
+    for (const photo of slice) {
+      const item = document.createElement('div');
+      item.className = 'm-item';
+      item.style.cssText = 'opacity:0;transform:translateY(12px);transition:opacity .5s,transform .5s';
+
+      const img   = document.createElement('img');
+      img.alt     = photo.caption || '';
+      img.loading = 'lazy';
+
+      // watermark lazily
+      const wmObs = new IntersectionObserver(async ([entry]) => {
+        if (entry.isIntersecting) {
+          wmObs.disconnect();
+          const url = await applyWatermark(photo.src);
+          img.src   = url;
+          attachLightbox(img);
+        }
+      }, { rootMargin: '200px' });
+      wmObs.observe(item);
+
+      item.appendChild(img);
+      if (photo.caption) {
+        const cap = document.createElement('div');
+        cap.className   = 'cap';
+        cap.textContent = photo.caption;
+        item.appendChild(cap);
+      }
+      container.appendChild(item);
+      fadeObs.observe(item);
+    }
+  } catch (e) {
+    console.warn('Could not load', jsonPath, e);
+  }
+}
 // index page: show first 3 from each section as preview
 loadGrid('data/creative.json', 'grid-creative', 3);
 loadGrid('data/events.json',   'grid-events',   3);
