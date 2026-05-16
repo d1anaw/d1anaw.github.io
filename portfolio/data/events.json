@@ -1,5 +1,37 @@
 [
-  { "src": "images/events/01.jpg", "caption": "" },
-  { "src": "images/events/02.jpg", "caption": "" },
-  { "src": "images/events/03.jpg", "caption": "" }
+  {
+    "event": "Class of 2028 Ring Delivery",
+    "date": "",
+    "photos": [
+      { "src": "images/events/2026-ring-delivery/B0004423.JPG", "caption": "" },
+      { "src": "images/events/2026-ring-delivery/B0004454.JPG", "caption": "" },
+      { "src": "images/events/2026-ring-delivery/B0004486.JPG", "caption": "" },
+      { "src": "images/events/2026-ring-delivery/B0004502.jpeg", "caption": "" },
+      { "src": "images/events/2026-ring-delivery/B0004572.JPG", "caption": "" },
+      { "src": "images/events/2026-ring-delivery/B0004586.JPG", "caption": "" },
+      { "src": "images/events/2026-ring-delivery/B0004593.JPG", "caption": "" },
+      { "src": "images/events/2026-ring-delivery/B0004599.JPG", "caption": "" },
+      { "src": "images/events/2026-ring-delivery/B0004600.JPG", "caption": "" },
+      { "src": "images/events/2026-ring-delivery/B0004646.JPG", "caption": "" },
+      { "src": "images/events/2026-ring-delivery/B0004686.JPG", "caption": "" },
+      { "src": "images/events/2026-ring-delivery/B0004761.JPG", "caption": "" },
+      { "src": "images/events/2026-ring-delivery/B0004764.JPG", "caption": "" },
+      { "src": "images/events/2026-ring-delivery/B0004789.JPG", "caption": "" }
+    ]
+  },
+    {
+    "event": "Ridonkulous Fall Showcase Photoshoot",
+    "date": "",
+    "photos": [
+      { "src": "images/events/2025fa-donk-photoshoot/1-Job_0240.jpg", "caption": "" },
+      { "src": "images/events/2025fa-donk-photoshoot/1-Job_0631.jpg", "caption": "" },
+      { "src": "images/events/2025fa-donk-photoshoot/2-Job_0390.jpg", "caption": "" },
+      { "src": "images/events/2025fa-donk-photoshoot/2-Job_0665.jpg", "caption": "" },
+      { "src": "images/events/2025fa-donk-photoshoot/3-Job_0395.jpg", "caption": "" },
+      { "src": "images/events/2025fa-donk-photoshoot/3-Job_0712.jpg", "caption": "" },
+      { "src": "images/events/2025fa-donk-photoshoot/4-Job_0722.jpg", "caption": "" },
+      { "src": "images/events/2025fa-donk-photoshoot/4-Job_0852.jpg", "caption": "" },
+      { "src": "images/events/2025fa-donk-photoshoot/5-IMG_7946.jpg", "caption": "" }
+    ]
+  }
 ]

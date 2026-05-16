@@ -7,11 +7,35 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<style>
+  .series-label {
+    padding: 48px 28px 18px;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    border-top: 1px solid rgba(26,26,24,0.08);
+  }
+  .series-label:first-of-type { border-top: none; }
+  .series-label h2 {
+    font-family: 'EB Garamond', serif;
+    font-size: 24px;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -0.01em;
+    color: #1a1a18;
+  }
+  .series-label span {
+    font-size: 11px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #8a8880;
+  }
+</style>
 </head>
 <body>
 
 <nav id="nav">
-  <a class="nav-name" href="index.html">Diana Wang</a>
+  <a class="nav-name" href="index.html">Your Name</a>
   <ul class="nav-links">
     <li><a href="daily-life.html">Daily Life</a></li>
     <li><a href="events.html">Events</a></li>
@@ -28,12 +52,11 @@
     <h1>Creative</h1>
     <p>Photography &amp; art</p>
   </div>
-
-  <div class="grid" id="photo-grid" style="margin-top: var(--gap);"></div>
+  <div id="creative-container"></div>
 </main>
 
 <footer>
-  <span>Diana Wang</span>
+  <span>Your Name</span>
   <span id="footer-year"></span>
 </footer>
 
@@ -47,11 +70,81 @@
   window.addEventListener('scroll', () => {
     document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
   }, { passive: true });
-  const lb = document.getElementById('lightbox');
+
+  const lb    = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightbox-img');
   document.getElementById('lightbox-close').addEventListener('click', () => lb.classList.remove('open'));
   lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('open'); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
-  loadGrid('data/creative.json', 'photo-grid');
+
+  const fadeObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = 1;
+        e.target.style.transform = 'none';
+        fadeObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  async function loadCreative() {
+    const container = document.getElementById('creative-container');
+    try {
+      const res     = await fetch('data/creative.json');
+      const series  = await res.json();
+
+      for (const s of series) {
+        // series heading
+        const label = document.createElement('div');
+        label.className = 'series-label';
+        label.innerHTML = `<h2>${s.series}</h2>${s.date ? `<span>${s.date}</span>` : ''}`;
+        container.appendChild(label);
+
+        // masonry grid for this series
+        const grid = document.createElement('div');
+        grid.className = 'grid';
+        grid.style.marginTop = 'var(--gap)';
+        container.appendChild(grid);
+
+        for (const photo of s.photos) {
+          const item = document.createElement('div');
+          item.className = 'grid-item';
+          item.style.cssText = 'opacity:0;transform:translateY(12px);transition:opacity .5s,transform .5s';
+
+          const img   = document.createElement('img');
+          img.alt     = photo.caption || '';
+          img.loading = 'lazy';
+
+          const wmObs = new IntersectionObserver(async ([entry]) => {
+            if (entry.isIntersecting) {
+              wmObs.disconnect();
+              const url = await applyWatermark(photo.src);
+              img.src   = url;
+              img.addEventListener('click', () => {
+                lbImg.src = img.src; lbImg.alt = img.alt;
+                lb.classList.add('open');
+              });
+            }
+          }, { rootMargin: '200px' });
+          wmObs.observe(item);
+
+          item.appendChild(img);
+          if (photo.caption) {
+            const cap       = document.createElement('div');
+            cap.className   = 'caption';
+            cap.textContent = photo.caption;
+            item.appendChild(cap);
+          }
+          grid.appendChild(item);
+          fadeObs.observe(item);
+        }
+      }
+    } catch(e) {
+      console.warn('Could not load creative.json', e);
+    }
+  }
+
+  loadCreative();
   document.getElementById('footer-year').textContent = new Date().getFullYear();
 </script>
 </body>

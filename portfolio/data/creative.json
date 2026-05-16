@@ -1,5 +1,20 @@
 [
-  { "src": "images/creative/01.jpg", "caption": "" },
-  { "src": "images/creative/02.jpg", "caption": "" },
-  { "src": "images/creative/03.jpg", "caption": "" }
+  {
+    "series": "2024 Spring",
+    "date": "2024",
+    "photos": [
+      { "src": "images/creative/2024sp/1-IMG_1576.jpg", "caption": "" },
+      { "src": "images/creative/2024sp/2-IMG_1620.jpg", "caption": "" },
+      { "src": "images/creative/2024sp/3-IMG_1632.jpg", "caption": "" },
+      { "src": "images/creative/2024sp/4-IMG_1645.jpg", "caption": "" },
+      { "src": "images/creative/2024sp/5-IMG_1652.jpg", "caption": "" },
+      { "src": "images/creative/2024sp/6-IMG_1725.jpg", "caption": "" },
+      { "src": "images/creative/2024sp/7-IMG_1812.jpg", "caption": "" },
+      { "src": "images/creative/2024sp/8-IMG_1838.jpg", "caption": "" },
+      { "src": "images/creative/2024sp/9-IMG_1869.jpg", "caption": "" },
+      { "src": "images/creative/2024sp/10-IMG_1910.jpg", "caption": "" },
+      { "src": "images/creative/2024sp/11-IMG_1920.jpg", "caption": "" },
+      { "src": "images/creative/2024sp/12-IMG_1994.jpg", "caption": "" }
+    ]
+  }
 ]
