@@ -115,18 +115,11 @@
           img.alt     = photo.caption || '';
           img.loading = 'lazy';
 
-          const wmObs = new IntersectionObserver(async ([entry]) => {
-            if (entry.isIntersecting) {
-              wmObs.disconnect();
-              const url = await applyWatermark(photo.src);
-              img.src   = url;
-              img.addEventListener('click', () => {
-                lbImg.src = img.src; lbImg.alt = img.alt;
-                lb.classList.add('open');
-              });
-            }
-          }, { rootMargin: '200px' });
-          wmObs.observe(item);
+          img.src = photo.src;
+          img.addEventListener('click', () => {
+            lbImg.src = photo.src; lbImg.alt = img.alt;
+            lb.classList.add('open');
+          });
 
           item.appendChild(img);
           if (photo.caption) {
