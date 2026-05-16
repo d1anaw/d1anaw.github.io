@@ -18,7 +18,7 @@ function applyWatermark(src) {
         ctx.fillStyle    = 'rgba(255,255,255,0.45)';
         ctx.textAlign    = 'right';
         ctx.textBaseline = 'bottom';
-        ctx.fillText('\u00a9 Your Name', img.naturalWidth - size * 0.6, img.naturalHeight - size * 0.6);
+        ctx.fillText('\u00a9 Diana Wang', img.naturalWidth - size * 0.6, img.naturalHeight - size * 0.6);
         resolve(canvas.toDataURL('image/jpeg', 0.92));
       } catch(e) {
         // canvas tainted or failed — just show the image as-is
