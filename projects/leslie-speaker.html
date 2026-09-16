@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leslie Speaker Guitar Pedal - Diana's Portfolio</title>
-    <link rel="stylesheet" href="../styles.css">
     <style>
         /* Override body font */
         body {
@@ -402,6 +401,7 @@
         <div class="outline-content">
             <h3>Contents</h3>
             <ul>
+                <li><a href="#validation-summary">Contribution &amp; Measurements</a></li>
                 <li><a href="#background">Background & Motivation</a></li>
                 <li><a href="#demo">Demo</a></li>
                 <li><a href="#system">System Diagram and Set Up</a></li>
@@ -419,6 +419,10 @@
         <p class="project-date">Power Electronics</p>
 
         <div class="project-content">
+            <h2 id="validation-summary">My contribution and measured results</h2>
+            <p>I designed and integrated the Class-D amplifier, 12 V boost supply for its gate drivers, and adjustable SEPIC supply for the DC motor. I measured less than 300 mV peak-to-peak steady-state output ripple and checked the amplifier filter’s frequency response with oscilloscope measurements at several input frequencies.</p>
+            <p>The supplies were operated open loop. These measurements establish steady-state behavior; I did not perform closed-loop regulation or load-transient validation. The electronics drove the speaker and motor, but the mechanical assembly did not produce the intended audible Leslie effect.</p>
+
             <h2 id="background">Background & Motivation</h2>
 
             <p>The final project is an open-ended exploration that allows us to design and build anything related to power electronics in general. Interested in shoegaze rock music and guitar pedals, I wanted to design a mechanical guitar pedal based on a <a href="https://www.youtube.com/watch?v=7DqOOg8_Af0">Leslie speaker</a>. By rotating a mechanical structure beneath the speaker, the Leslie speaker modulates the frequency of the sound waves and create a vibrato effect that is reminiscent of those present in shoegaze music. Different from a classic Leslie speaker, my system will provide continuous speed control instead of two fixed settings.</p>

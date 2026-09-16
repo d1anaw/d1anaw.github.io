@@ -184,6 +184,10 @@
                 padding: 1.5rem;
             }
         }
+        .project-description { font-size: .9rem; line-height: 1.55; color: #555; max-width: 60ch; }
+        .project-cover { color: #333; font-size: clamp(1.4rem, 3vw, 2.2rem); padding: 2rem; text-align: center; letter-spacing: -.03em; }
+        .project-meta { flex-wrap: wrap; }
+        a:focus-visible, button:focus-visible { outline: 2px solid #222; outline-offset: 4px; }
     </style>
 </head>
 <body>
@@ -195,7 +199,7 @@
                 <a href="about.html">about</a>
             </nav>
             <div class="intro">
-                hello there! My name is Diana, and I'm a junior studying Electrical Engineering & Computer Science at MIT, with an interest in power electronics, electromagnetics, and robotics.
+                hello there! My name is Diana, and I'm studying Electrical Engineering & Computer Science at MIT, with an interest in power electronics, electromagnetics, and robotics.
                 I use this space both to document my builds from personal and course projects and to synthesize
                 and reflect on my learnings across courses and projects.
 
@@ -221,7 +225,7 @@
         <footer>
             <a href="https://www.linkedin.com/in/d1anawang/">linkedin</a>
             <!-- <a href="https://github.com/d1anaw">github</a> -->
-            <a href="jiamei@mit.edu">email</a>
+            <a href="mailto:jiamei@mit.edu">email</a>
         </footer>
     </div>
 
@@ -235,6 +239,7 @@
             const button = document.createElement('button');
             button.className = 'filter-tag' + (index === 0 ? ' active' : '');
             button.dataset.filter = category.id;
+            button.setAttribute('aria-pressed', String(index === 0));
             button.textContent = category.label;
             filterTagsContainer.appendChild(button);
         });
@@ -256,7 +261,8 @@
                 img.alt = project.title;
                 projectImage.appendChild(img);
             } else {
-                projectImage.textContent = 'image';
+                projectImage.textContent = project.cover || project.title;
+                projectImage.classList.add('project-cover');
             }
 
             const projectTitle = document.createElement('div');
@@ -285,6 +291,10 @@
             projectItem.appendChild(projectImage);
             projectItem.appendChild(projectTitle);
             projectItem.appendChild(projectMeta);
+            const description = document.createElement('p');
+            description.className = 'project-description';
+            description.textContent = project.description;
+            projectItem.appendChild(description);
 
             projectsGrid.appendChild(projectItem);
         });
@@ -298,8 +308,9 @@
                 const filter = button.dataset.filter;
 
                 // Update active state
-                filterButtons.forEach(btn => btn.classList.remove('active'));
+                filterButtons.forEach(btn => { btn.classList.remove('active'); btn.setAttribute('aria-pressed', 'false'); });
                 button.classList.add('active');
+                button.setAttribute('aria-pressed', 'true');
 
                 // Filter projects
                 projectItems.forEach(item => {
