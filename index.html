@@ -258,7 +258,11 @@
             if (project.image && project.image !== 'images/placeholder.jpg') {
                 const img = document.createElement('img');
                 img.src = project.image;
-                img.alt = project.title;
+                img.alt = project.imageAlt || project.title;
+                if (project.imageFit === 'contain') {
+                    img.style.objectFit = 'contain';
+                    img.style.backgroundColor = '#fff';
+                }
                 projectImage.appendChild(img);
             } else {
                 projectImage.textContent = project.cover || project.title;

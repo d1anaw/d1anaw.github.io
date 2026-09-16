@@ -41,8 +41,9 @@ const projects = [
             "industry",
             "software"
         ],
-        "image": "",
-        "cover": "100 kW / 800 V → 52 V",
+        "image": "./images/circuits/full-bridge-llc.svg",
+        "imageFit": "contain",
+        "imageAlt": "Representative single-phase full-bridge LLC schematic",
         "description": "Schneider internship: device and resonant-tank selection, PLECS loss models, and Python analysis automation.",
         "link": "projects/schneider-converter.html"
     },
@@ -55,7 +56,7 @@ const projects = [
             "software"
         ],
         "image": "",
-        "cover": "4-stage RISC-V",
+        "cover": "5-stage RISC-V",
         "description": "Simulation debugging and custom-instruction/cache optimizations: 80% lower MNIST inference runtime than the baseline.",
         "link": "projects/risc-v.html"
     },
@@ -66,8 +67,9 @@ const projects = [
             "power",
             "research"
         ],
-        "image": "",
-        "cover": "50% smaller volume",
+        "image": "./images/inductor-simulations.png",
+        "imageFit": "contain",
+        "imageAlt": "Inductor temperature and magnetic flux density simulation plots",
         "description": "Maxwell/Icepak design comparison with less than 20% Q degradation; second-author IEEE OJPEL publication.",
         "link": "projects/magnetic-inductors.html"
     },
