@@ -8,6 +8,7 @@ const projects = [
             "research"
         ],
         "image": "./images/classE_schematic.png",
+        "imageFit": "contain",
         "description": "Design, PCB layout, high-frequency measurements, and iterative tuning; measured 84% efficiency at 350 W.",
         "link": "projects/classE-inverter.html"
     },
@@ -19,6 +20,7 @@ const projects = [
             "course"
         ],
         "image": "./images/amplifier/layout.png",
+        "imageFit": "contain",
         "description": "Bias and device sizing, gain–power–swing tradeoffs, and DRC/LVS-clean layout. Silicon testing pending.",
         "link": "projects/differential-amplifier.html"
     },
@@ -57,7 +59,7 @@ const projects = [
         ],
         "image": "",
         "cover": "5-stage RISC-V",
-        "description": "Simulation debugging and custom-instruction/cache optimizations: 80% lower MNIST inference runtime than the baseline.",
+        "description": "Built and debugged a five-stage processor, then reduced MNIST inference runtime by 80% through custom instructions and cache optimizations.",
         "link": "projects/risc-v.html"
     },
     {

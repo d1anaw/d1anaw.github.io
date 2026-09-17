@@ -299,3 +299,9 @@
 .contents a { color:#333; font-size:.9rem; } h2[id] { scroll-margin-top:100px; }
 a:focus-visible { outline:2px solid #222; outline-offset:4px; }
 @media(max-width:500px) { nav { gap:1rem; } .nav-links { gap:.8rem; } .project-content th,.project-content td { padding:.5rem; } }
+
+/* Research posters: two columns on desktop, full-width on narrow screens. */
+.poster-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; align-items: start; }
+.project-content .poster-grid figure { margin: 0; min-width: 0; }
+.project-content .poster-grid img { width: 100%; height: auto; object-fit: contain; border: 1px solid #000; }
+@media (max-width: 600px) { .poster-grid { grid-template-columns: 1fr; } }

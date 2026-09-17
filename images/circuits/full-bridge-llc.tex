@@ -3,42 +3,31 @@
 \begin{document}
 \begin{circuitikz}[font=\sffamily, line width=0.8pt]
 \ctikzset{diodes/scale=0.65}
-\node[font=\sffamily\bfseries\Large, anchor=west] at (-1,6) {Single-phase full-bridge LLC};
-\node[font=\sffamily\small, anchor=west, text=gray] at (-1,5.35) {Representative topology \textbullet\ ideal switches and diode rectification};
 % Input voltage and four ideal bridge switches.
-\draw (-1,4.2) to[V,l_=$V_{\mathrm{in}}$] (-1,0);
+\draw (-1,4.2) to[V] (-1,0);
 \draw (-1,4.2) -- (3,4.2);
 \draw (-1,0) -- (3,0);
-\draw (1,4.2) to[nos,l=$Q_1$] (1,2.1) to[nos,l=$Q_2$] (1,0);
-\draw (3,4.2) to[nos,l=$Q_3$] (3,2.1) to[nos,l=$Q_4$] (3,0);
+\draw (1,4.2) to[nos] (1,2.1) to[nos] (1,0);
+\draw (3,4.2) to[nos] (3,2.1) to[nos] (3,0);
 \node[circ] at (1,2.1) {}; \node[circ] at (3,2.1) {};
-\node[above left] at (1,2.1) {$A$}; \node[above right] at (3,2.1) {$B$};
 % A drives the series resonant capacitor and inductor. The crossing at x=3 is not a junction.
 \draw (1,2.1) -- (1.5,2.1) -- (1.5,2.5) -- (2.8,2.5) arc[start angle=180,end angle=0,radius=0.2] -- (4,2.5)
- to[C,l=$C_r$] (5.5,2.5) to[L,l=$L_r$] (7,2.5) -- (9,2.5);
+ to[C] (5.5,2.5) to[L] (7,2.5) -- (9,2.5);
 \draw (3,2.1) -- (3.7,2.1) -- (3.7,0.55) -- (9,0.55);
-\draw (7.4,2.5) to[L,l_=$L_m$,*-*] (7.4,0.55);
+\draw (7.4,2.5) to[L,*-*] (7.4,0.55);
 % Ideal transformer with magnetizing inductance explicitly modeled in parallel.
 \draw (9,2.5) to[L] (9,0.55);
 \draw (10,2.5) to[L,mirror] (10,0.55);
 \draw (9.43,0.9) -- (9.43,2.5) (9.57,0.9) -- (9.57,2.5);
-\node at (9.5,3.45) {$N_p:N_s$};
 \node[circ,scale=0.6] at (8.85,2.25) {}; \node[circ,scale=0.6] at (10.15,2.25) {};
 % Secondary feeds the AC midpoints of the diode bridge.
 \draw (10,2.5) -- (10.8,2.5) -- (10.8,1.7) -- (12,1.7);
 \draw (10,0.55) -- (10,-0.5) -- (14.8,-0.5) -- (14.8,1.7) -- (14,1.7);
-\draw (12,0) to[D,l=$D_2$] (12,1.7) to[D,l=$D_1$] (12,3.8);
-\draw (14,0) to[D,l=$D_4$] (14,1.7) to[D,l=$D_3$] (14,3.8);
+\draw (12,0) to[D] (12,1.7) to[D] (12,3.8);
+\draw (14,0) to[D] (14,1.7) to[D] (14,3.8);
 \draw (12,3.8) -- (18,3.8) (12,0) -- (18,0);
 \node[circ] at (12,1.7) {}; \node[circ] at (14,1.7) {};
-\draw (16,3.8) to[C,l=$C_o$,*-*] (16,0);
-\draw (18,3.8) to[R,l=$R_{\mathrm{load}}$] (18,0);
-\node[above] at (17,3.8) {$+\,V_o$};
-\node[below] at (17,0) {$-$};
-\node[text=gray] at (1,-1.2) {Full bridge};
-\node[text=gray] at (6,-1.2) {LLC resonant tank};
-\node[text=gray] at (9.5,-1.2) {Isolation};
-\node[text=gray] at (13,-1.2) {Rectifier};
-\node[text=gray] at (17,-1.2) {Output};
+\draw (16,3.8) to[C,*-*] (16,0);
+\draw (18,3.8) to[R] (18,0);
 \end{circuitikz}
 \end{document}
