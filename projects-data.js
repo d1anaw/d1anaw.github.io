@@ -4,8 +4,7 @@ const projects = [
         "title": "30 MHz Class-E Inverter",
         "date": "Research · 2026",
         "tags": [
-            "power",
-            "research"
+            "power"
         ],
         "image": "./images/classE_schematic.png",
         "imageFit": "contain",
@@ -16,8 +15,7 @@ const projects = [
         "title": "CMOS Differential Amplifier Tapeout",
         "date": "March–May 2026",
         "tags": [
-            "analog",
-            "course"
+            "analog"
         ],
         "image": "./images/amplifier/layout.png",
         "imageFit": "contain",
@@ -28,8 +26,7 @@ const projects = [
         "title": "Leslie Speaker 'Pedal'",
         "date": "December 2025",
         "tags": [
-            "power",
-            "course"
+            "power"
         ],
         "image": "./images/leslie_box.jpg",
         "description": "Class-D audio, boost and SEPIC supplies, measured ripple, and filter response in a working electronics assembly.",
@@ -39,9 +36,7 @@ const projects = [
         "title": "Three-Phase LLC Converter Design & Analysis",
         "date": "June–August 2026",
         "tags": [
-            "power",
-            "industry",
-            "software"
+            "power"
         ],
         "image": "./images/circuits/full-bridge-llc.svg",
         "imageFit": "contain",
@@ -53,9 +48,7 @@ const projects = [
         "title": "RISC-V Processor Optimization",
         "date": "February–May 2025",
         "tags": [
-            "digital",
-            "course",
-            "software"
+            "digital"
         ],
         "image": "",
         "cover": "5-stage RISC-V",
@@ -66,8 +59,7 @@ const projects = [
         "title": "Compact Magnetic-Cored Inductors",
         "date": "Research",
         "tags": [
-            "power",
-            "research"
+            "power"
         ],
         "image": "./images/inductor-simulations.png",
         "imageFit": "contain",
@@ -79,8 +71,7 @@ const projects = [
         "title": "Resonant Converter for Fluorescent Lamp Drive",
         "date": "October 2025",
         "tags": [
-            "power",
-            "course"
+            "power"
         ],
         "image": "./images/lamp_wave1.jpg",
         "description": "Resonant-tank design, component-loss estimates, and measured lamp ignition and steady-state waveforms.",
@@ -104,21 +95,5 @@ const filterCategories = [
     {
         "id": "digital",
         "label": "digital"
-    },
-    {
-        "id": "research",
-        "label": "research"
-    },
-    {
-        "id": "industry",
-        "label": "industry"
-    },
-    {
-        "id": "course",
-        "label": "course"
-    },
-    {
-        "id": "software",
-        "label": "software"
     }
 ];
